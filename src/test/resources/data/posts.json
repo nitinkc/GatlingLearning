@@ -1,0 +1,27 @@
+[
+  {
+    "postId": 1,
+    "title": "Introduction to Gatling",
+    "body": "Gatling is an open-source load testing framework based on Scala and Akka."
+  },
+  {
+    "postId": 2,
+    "title": "HTTP Simulations in Gatling",
+    "body": "HTTP simulations allow you to test RESTful APIs under load."
+  },
+  {
+    "postId": 3,
+    "title": "Kafka Load Testing",
+    "body": "Testing Kafka producers and consumers at scale using Gatling."
+  },
+  {
+    "postId": 4,
+    "title": "Feeders and Data-Driven Tests",
+    "body": "Feeders inject dynamic data into virtual user sessions."
+  },
+  {
+    "postId": 5,
+    "title": "Load Profiles Explained",
+    "body": "Ramp, constant, step, and spike load profiles serve different testing goals."
+  }
+]

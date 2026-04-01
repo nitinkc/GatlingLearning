@@ -1,0 +1,10 @@
+{
+  "orderId":     "{{orderId}}",
+  "productId":   "{{productId}}",
+  "productName": "{{productName}}",
+  "price":       {{price}},
+  "currency":    "USD",
+  "quantity":    1,
+  "status":      "PLACED",
+  "timestamp":   {{timestamp}}
+}

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.learn.gatling</groupId>
+  <artifactId>gatling-learning</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>Gatling Learning Project</name>
+  <description>
+    A self-contained, tutorial-style project for learning Gatling load testing.
+    Covers HTTP simulations (against public mock APIs) and Kafka simulations
+    (against embedded Kafka via Testcontainers). No secrets or cloud tokens required.
+  </description>
+
+  <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Core versions -->
+    <gatling.version>3.13.4</gatling.version>
+    <gatling.maven.plugin.version>4.14.0</gatling.maven.plugin.version>
+    <kafka.version>3.7.0</kafka.version>
+    <testcontainers.version>1.19.8</testcontainers.version>
+    <jackson.version>2.17.1</jackson.version>
+    <slf4j.version>2.0.13</slf4j.version>
+    <logback.version>1.5.6</logback.version>
+    <lombok.version>1.18.34</lombok.version>
+  </properties>
+
+  <dependencies>
+    <!-- ─────────────────────────────────────────────
+         Gatling core + HTTP protocol
+    ───────────────────────────────────────────── -->
+    <dependency>
+      <groupId>io.gatling.highcharts</groupId>
+      <artifactId>gatling-charts-highcharts</artifactId>
+      <version>${gatling.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-core</artifactId>
+      <version>${gatling.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-app</artifactId>
+      <version>${gatling.version}</version>
+    </dependency>
+
+    <!-- ─────────────────────────────────────────────
+         Kafka client — used directly from simulation code
+         (no Spring, no internal libs)
+    ───────────────────────────────────────────── -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>${kafka.version}</version>
+    </dependency>
+
+    <!-- ─────────────────────────────────────────────
+         Testcontainers — spins up a real Kafka broker
+         inside Docker for the Kafka simulations.
+         No external broker needed; works in CI too.
+    ───────────────────────────────────────────── -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>kafka</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- ─────────────────────────────────────────────
+         JSON handling
+    ───────────────────────────────────────────── -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <!-- ─────────────────────────────────────────────
+         Logging
+    ───────────────────────────────────────────── -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+
+    <!-- ─────────────────────────────────────────────
+         Lombok — reduces boilerplate in helper classes
+    ───────────────────────────────────────────── -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!--
+      Gatling looks for simulations inside src/test/java AND src/test/resources
+      (for body templates). Tell Maven to include test resources from both locations.
+    -->
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <plugins>
+      <!-- Compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+
+      <!--
+        Gatling Maven Plugin
+        Run a single simulation:
+          mvn gatling:test -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim01_BasicHttp
+
+        Run all simulations (not recommended for Kafka sims which need Docker):
+          mvn gatling:test
+      -->
+      <plugin>
+        <groupId>io.gatling</groupId>
+        <artifactId>gatling-maven-plugin</artifactId>
+        <version>${gatling.maven.plugin.version}</version>
+        <configuration>
+          <failOnError>true</failOnError>
+          <!-- Override via -Dgatling.simulationClass=... on the command line -->
+          <!-- simulationClass>io.learn.gatling.simulations.http.Sim01_BasicHttp</simulationClass -->
+        </configuration>
+      </plugin>
+
+      <!-- Surefire — skip JUnit tests so only Gatling simulations run -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

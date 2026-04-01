@@ -1,0 +1,5 @@
+{
+  "title":  "Updated Title by #{username}",
+  "body":   "This post was fully replaced via PUT by virtual user #{username}.",
+  "userId": #{userId}
+}

@@ -1,0 +1,8 @@
+{
+  "storeId":   "{{storeId}}",
+  "storeName": "{{storeName}}",
+  "productId": "{{productId}}",
+  "quantity":  {{quantity}},
+  "action":    "RESTOCK",
+  "timestamp": {{timestamp}}
+}

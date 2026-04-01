@@ -1,0 +1,137 @@
+name: Gatling Learning — CI
+
+# ─────────────────────────────────────────────────────────────────
+# When this workflow runs
+# ─────────────────────────────────────────────────────────────────
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+  # Allow manual trigger from the GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      simulation:
+        description: "Simulation class to run (leave blank to run all HTTP sims)"
+        required: false
+        default: ""
+
+# Only one run of this workflow at a time per branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ───────────────────────────────────────────────────────────────
+  # JOB 1: HTTP simulations
+  # No Docker needed — targets the public JSONPlaceholder API.
+  # ───────────────────────────────────────────────────────────────
+  http-simulations:
+    name: HTTP Simulations
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven          # Caches ~/.m2 between runs for faster builds
+
+      # ── Run Sim01 ──────────────────────────────────────────────
+      - name: "Sim01 — Basic HTTP"
+        run: |
+          mvn gatling:test \
+            -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim01_BasicHttp \
+            --no-transfer-progress
+
+      # ── Run Sim02 ──────────────────────────────────────────────
+      - name: "Sim02 — HTTP with Feeders"
+        run: |
+          mvn gatling:test \
+            -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim02_HttpWithFeeders \
+            --no-transfer-progress
+
+      # ── Run Sim03 ──────────────────────────────────────────────
+      - name: "Sim03 — HTTP Checks & Assertions"
+        run: |
+          mvn gatling:test \
+            -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim03_HttpChecks \
+            --no-transfer-progress
+
+      # ── Run Sim04 ──────────────────────────────────────────────
+      - name: "Sim04 — Load Profiles (smoke)"
+        run: |
+          mvn gatling:test \
+            -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim04_LoadProfiles \
+            --no-transfer-progress
+
+      # ── Run Sim05 ──────────────────────────────────────────────
+      - name: "Sim05 — CRUD (PUT/PATCH/DELETE)"
+        run: |
+          mvn gatling:test \
+            -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim05_CRUD \
+            --no-transfer-progress
+
+      # ── Upload HTML reports as build artifacts ─────────────────
+      # Reports are available in the GitHub Actions UI for 7 days.
+      - name: Upload Gatling reports
+        if: always()   # upload even if a simulation fails
+        uses: actions/upload-artifact@v4
+        with:
+          name: gatling-http-reports-${{ github.run_number }}
+          path: target/gatling/
+          retention-days: 7
+
+  # ───────────────────────────────────────────────────────────────
+  # JOB 2: Kafka simulations
+  # Requires Docker to spin up the embedded Kafka container
+  # via Testcontainers. GitHub-hosted ubuntu runners have Docker
+  # pre-installed — no extra setup needed.
+  # ───────────────────────────────────────────────────────────────
+  kafka-simulations:
+    name: Kafka Simulations
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven
+
+      # Testcontainers pulls Docker images from Docker Hub.
+      # Pre-pulling avoids timeout during the simulation.
+      - name: Pre-pull Kafka image
+        run: docker pull confluentinc/cp-kafka:7.6.1
+
+      # ── Run Sim06 ──────────────────────────────────────────────
+      - name: "Sim06 — Basic Kafka Producer"
+        run: |
+          mvn gatling:test \
+            -Dgatling.simulationClass=io.learn.gatling.simulations.kafka.Sim06_BasicKafkaProducer \
+            --no-transfer-progress
+
+      # ── Run Sim07 ──────────────────────────────────────────────
+      - name: "Sim07 — Kafka with Feeders"
+        run: |
+          mvn gatling:test \
+            -Dgatling.simulationClass=io.learn.gatling.simulations.kafka.Sim07_KafkaWithFeeders \
+            --no-transfer-progress
+
+      - name: Upload Gatling reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gatling-kafka-reports-${{ github.run_number }}
+          path: target/gatling/
+          retention-days: 7

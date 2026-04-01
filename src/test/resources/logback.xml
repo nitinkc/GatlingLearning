@@ -1,0 +1,24 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- Gatling internals — INFO shows simulation progress -->
+  <logger name="io.gatling" level="INFO"/>
+
+  <!-- Testcontainers — shows container startup logs -->
+  <logger name="org.testcontainers" level="INFO"/>
+  <logger name="com.github.dockerjava" level="WARN"/>
+
+  <!-- Our learning simulations — DEBUG shows per-message logs -->
+  <logger name="io.learn.gatling" level="DEBUG"/>
+
+  <!-- Kafka client — WARN to suppress verbose metadata/heartbeat logs -->
+  <logger name="org.apache.kafka" level="WARN"/>
+
+  <root level="WARN">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>

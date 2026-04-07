@@ -6,7 +6,7 @@ target/
 .idea/
 *.iml
 .vscode/
-*.DS_Store
+.DS_Store
 
 # Gatling reports (large HTML reports — add to git if you want to track history)
 # Uncomment to include reports in git:

@@ -39,7 +39,8 @@ extra_javascript:
   - js/mermaid-init.js
 
 extra_css:
-  - https://unpkg.com/mermaid@10/dist/mermaid.css
+   - https://unpkg.com/mermaid@10/dist/mermaid.css
+   - css/custom.css
 
 nav:
   - 🏠 Home: index.md

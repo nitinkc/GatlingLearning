@@ -1,0 +1,99 @@
+/* List spacing and formatting improvements */
+
+/* Add spacing before lists */
+ul,
+ol {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* Improve nested list spacing */
+ul li,
+ol li {
+    margin-bottom: 0.5em;
+}
+
+/* Better spacing for list items with multiple content types */
+li > p,
+li > ul,
+li > ol,
+li > blockquote,
+li > pre,
+li > code {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* Ensure code blocks in lists don't break rendering */
+li > pre {
+    margin-left: 1.5em;
+}
+
+/* Better spacing around headings before lists */
+h1 + ul,
+h1 + ol,
+h2 + ul,
+h2 + ol,
+h3 + ul,
+h3 + ol,
+h4 + ul,
+h4 + ol,
+h5 + ul,
+h5 + ol,
+h6 + ul,
+h6 + ol {
+    margin-top: 1.5em;
+}
+
+/* Spacing after lists before next content */
+ul + p,
+ol + p,
+ul + h2,
+ol + h2,
+ul + h3,
+ol + h3,
+ul + h4,
+ol + h4 {
+    margin-top: 1.5em;
+}
+
+/* Better spacing for definition lists */
+dl {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+dt {
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+dd {
+    margin-left: 2em;
+    margin-bottom: 0.5em;
+}
+
+/* Improve code block spacing around lists */
+pre {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* Blockquote spacing */
+blockquote {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* Table spacing */
+table {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* Horizontal rule spacing */
+hr {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+

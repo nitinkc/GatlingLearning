@@ -4,10 +4,10 @@
 
 In Gatling, there are two injection models:
 
-| Model | Behavior |
-|:------|:---------|
+| Model            | Behavior                                                                             |
+|:-----------------|:-------------------------------------------------------------------------------------|
 | **Closed Model** | Fixed number of users cycle through scenario (e.g., "10 users, each repeat forever") |
-| **Open Model** | Unlimited concurrent users; new users arrive at a rate you specify |
+| **Open Model**   | Unlimited concurrent users; new users arrive at a rate you specify                   |
 
 Open models simulate **unlimited traffic arriving at a constant/varying rate**, which matches real-world scenarios better:
 

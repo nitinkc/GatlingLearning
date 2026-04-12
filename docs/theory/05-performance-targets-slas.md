@@ -449,15 +449,15 @@ After test:
 
 ## Kafka-Specific SLA Targets
 
-| Service Type | p95 Target | p99 Target | p99.9 Target |
-|---|---|---|---|
-| **User-Facing Web** | <300ms | <1000ms | <3000ms |
-| **Mobile App API** | <200ms | <500ms | <2000ms |
-| **Internal Service** | <100ms | <300ms | <1000ms |
-| **Batch Processing** | <5000ms | <30000ms | N/A |
-| **Real-time Analytics** | <1000ms | <5000ms | <30000ms |
-| **Kafka Produce** | <100ms | <500ms | — |
-| **Kafka Consumer Lag** | — | — | <500ms per msg |
+| Service Type            | p95 Target | p99 Target | p99.9 Target   |
+|:------------------------|:-----------|:-----------|:---------------|
+| **User-Facing Web**     | <300ms     | <1000ms    | <3000ms        |
+| **Mobile App API**      | <200ms     | <500ms     | <2000ms        |
+| **Internal Service**    | <100ms     | <300ms     | <1000ms        |
+| **Batch Processing**    | <5000ms    | <30000ms   | N/A            |
+| **Real-time Analytics** | <1000ms    | <5000ms    | <30000ms       |
+| **Kafka Produce**       | <100ms     | <500ms     | —              |
+| **Kafka Consumer Lag**  | —          | —          | <500ms per msg |
 
 ---
 

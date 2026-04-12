@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Learning Team">
+        <link rel="canonical" href="https://nitinkc.github.io/GatlingLearning/theory/16-load-test-analysis/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>16. Load Test Analysis - Performance Testing with Gatling</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="https://unpkg.com/mermaid@10/dist/mermaid.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Performance Testing with Gatling</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">🏠 Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📚 Theory</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01-what-is-performance-testing/" class="dropdown-item">01. What is Performance Testing?</a>
+</li>
+                                    
+<li>
+    <a href="../02-key-metrics/" class="dropdown-item">02. Key Metrics</a>
+</li>
+                                    
+<li>
+    <a href="../03-load-testing-methodology/" class="dropdown-item">03. Load Testing Methodology</a>
+</li>
+                                    
+<li>
+    <a href="../04-open-load-patterns/" class="dropdown-item">04. Open Load Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../05-performance-targets-slas/" class="dropdown-item">05. Performance Targets & SLAs</a>
+</li>
+                                    
+<li>
+    <a href="../06-common-pitfalls/" class="dropdown-item">06. Common Pitfalls</a>
+</li>
+                                    
+<li>
+    <a href="../07-gatling-architecture/" class="dropdown-item">07. Gatling Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../08-simulation-lifecycle/" class="dropdown-item">08. Simulation Lifecycle</a>
+</li>
+                                    
+<li>
+    <a href="../09-http-vs-kafka/" class="dropdown-item">09. HTTP vs Kafka</a>
+</li>
+                                    
+<li>
+    <a href="../10-scenarios-and-feeders/" class="dropdown-item">10. Scenarios & Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../11-checks-and-assertions/" class="dropdown-item">11. Checks & Assertions</a>
+</li>
+                                    
+<li>
+    <a href="../12-session-and-correlation/" class="dropdown-item">12. Session & Correlation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">🔬 Labs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../labs/22-lab-overview/" class="dropdown-item">Lab Overview</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/23-lab-basic-http/" class="dropdown-item">Lab 1 - Basic HTTP</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/24-lab-http-feeders/" class="dropdown-item">Lab 2 - HTTP Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/25-lab-checks-validation/" class="dropdown-item">Lab 3 - Checks & Validation</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/26-lab-load-profiles/" class="dropdown-item">Lab 4 - Load Profiles</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/27-lab-crud-operations/" class="dropdown-item">Lab 5 - CRUD Operations</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/28-lab-kafka-producer/" class="dropdown-item">Lab 6 - Kafka Producer</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/29-lab-kafka-feeders/" class="dropdown-item">Lab 7 - Kafka Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/30-lab-advanced-patterns/" class="dropdown-item">Lab 8 - Advanced Patterns</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📊 Monitoring & Advanced</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../13-datadog-integration/" class="dropdown-item">13. Datadog Integration</a>
+</li>
+                                    
+<li>
+    <a href="../14-traces-operations-spans/" class="dropdown-item">14. Traces & Spans</a>
+</li>
+                                    
+<li>
+    <a href="../15-dashboard-queries/" class="dropdown-item">15. Dashboard Queries</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">16. Load Test Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../17-custom-feeders/" class="dropdown-item">17. Custom Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../18-advanced-patterns/" class="dropdown-item">18. Advanced Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../19-optimization-tips/" class="dropdown-item">19. Optimization Tips</a>
+</li>
+                                    
+<li>
+    <a href="../20-distributed-testing/" class="dropdown-item">20. Distributed Testing</a>
+</li>
+                                    
+<li>
+    <a href="../21-quick-reference/" class="dropdown-item">21. Quick Reference</a>
+</li>
+                                    
+<li>
+    <a href="../22-glossary/" class="dropdown-item">22. Glossary</a>
+</li>
+                                    
+<li>
+    <a href="../23-run-commands/" class="dropdown-item">23. Run Commands</a>
+</li>
+                                    
+<li>
+    <a href="../24-faq/" class="dropdown-item">24. FAQ</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning" class="nav-link">🔗 GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../15-dashboard-queries/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../17-custom-feeders/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning/edit/master/docs/theory/16-load-test-analysis.md" class="nav-link">Edit on nitinkc/GatlingLearning
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#load-test-analysis" class="nav-link">Load Test Analysis</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#step-1-gatling-report-analysis" class="nav-link">Step 1: Gatling Report Analysis</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#step-2-correlate-with-datadog" class="nav-link">Step 2: Correlate with Datadog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#step-3-identify-bottlenecks" class="nav-link">Step 3: Identify Bottlenecks</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#step-4-root-cause-analysis" class="nav-link">Step 4: Root Cause Analysis</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#step-5-make-optimization-decisions" class="nav-link">Step 5: Make Optimization Decisions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-analysis-scenarios" class="nav-link">Common Analysis Scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#documentation-template" class="nav-link">Documentation Template</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#key-takeaways" class="nav-link">Key Takeaways</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#navigation" class="nav-link">Navigation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="load-test-analysis">Load Test Analysis</h1>
+<h2 id="overview">Overview</h2>
+<p>The real value of load testing is in the <strong>analysis</strong>. Gatling + Datadog together tell a complete story:</p>
+<ul>
+<li><strong>Gatling</strong>: What load did I create? What did the system respond?</li>
+<li><strong>Datadog</strong>: What was happening inside the system during that load?</li>
+</ul>
+<hr />
+<h2 id="step-1-gatling-report-analysis">Step 1: Gatling Report Analysis</h2>
+<h3 id="open-the-html-report">Open the HTML Report</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>open<span class="w"> </span>target/gatling/sim01_basichttp-*/index.html
+</code></pre></div>
+<h3 id="key-sections">Key Sections</h3>
+<h4 id="global-statistics">Global Statistics</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Total Requests:  1,200
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Successful:      1,190 (99.2%)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Failed:          10 (0.8%)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Min Latency:     45ms
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Mean Latency:    180ms
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>P50 Latency:     160ms
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>P95 Latency:     450ms
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>P99 Latency:     1200ms
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Max Latency:     2100ms
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Requests/sec:    40 (average)
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Peak RPS:        95
+</code></pre></div>
+<h3 id="analysis-questions">Analysis Questions</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Q1: Success rate OK?
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>A1: 99.2% is good (target &gt;99%)
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Q2: P95 latency acceptable?
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>A2: 450ms is good (target &lt;500ms)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Q3: Any sudden failures?
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>A3: Look at timeline - when did failures happen?
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Q4: Latency increasing over time?
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>A4: Check graph - should be stable or improving
+</code></pre></div>
+<hr />
+<h2 id="step-2-correlate-with-datadog">Step 2: Correlate with Datadog</h2>
+<h3 id="during-test-execution">During Test Execution</h3>
+<ol>
+<li>Note the <strong>test start time</strong> from Gatling</li>
+<li>Open Datadog dashboard</li>
+<li>Set time range to match test duration</li>
+<li>Watch metrics in real-time</li>
+</ol>
+<h3 id="example-timeline">Example Timeline</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>10:00:00 - Load test starts (Gatling)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>10:00:15 - Datadog shows CPU: 20% → 60%
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>10:00:30 - Datadog shows p95 latency: 100ms → 300ms
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>10:00:45 - Datadog shows database queries: 50ms → 200ms
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>10:01:00 - Load test ends
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Correlation: As load increases (Gatling), system resources increase (Datadog)
+</code></pre></div>
+<hr />
+<h2 id="step-3-identify-bottlenecks">Step 3: Identify Bottlenecks</h2>
+<h3 id="method-1-look-at-datadog-service-map">Method 1: Look at Datadog Service Map</h3>
+<p>Shows which service is slowest:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>┌─────────────┐      ┌──────────────┐      ┌──────────────┐
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>│ API Gateway │ 5ms  │ Auth Service │ 10ms │ Business     │ 100ms
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>└─────────────┘  ──→ └──────────────┘  ──→ │ Logic        │
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                                           └──────────────┘
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                                                   │
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>                                                   ↓
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>                                           ┌──────────────┐
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>                                           │ Database     │ 350ms ← BOTTLENECK!
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>                                           └──────────────┘
+</code></pre></div>
+<h3 id="method-2-look-at-slowest-traces">Method 2: Look at Slowest Traces</h3>
+<ol>
+<li>Datadog → Traces</li>
+<li>Filter: <code>env:staging test:Lab1</code></li>
+<li>Sort by latency (longest first)</li>
+<li>Click on p99 trace</li>
+<li>Examine spans</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Trace Duration: 465ms
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>├─ API Gateway: 5ms
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>├─ Auth: 10ms
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>├─ Business Logic: 50ms
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>├─ DB Query: 380ms ← SLOW!
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>└─ Serialization: 20ms
+</code></pre></div>
+<hr />
+<h2 id="step-4-root-cause-analysis">Step 4: Root Cause Analysis</h2>
+<h3 id="bottleneck-database-query">Bottleneck: Database Query</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Symptom: DB Query taking 380ms
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Investigation:
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>├─ Query type: SELECT * FROM users WHERE id=?
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>├─ Execution count during load: 1,200
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>├─ Sequential query plan: Full table scan
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>└─ Root cause: Missing index on id column
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Optimization:
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>├─ Action: CREATE INDEX idx_users_id ON users(id)
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>├─ Expected improvement: 380ms → 20ms
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>└─ Benefit: P95 latency 450ms → 90ms
+</code></pre></div>
+<h3 id="bottleneck-slow-external-service">Bottleneck: Slow External Service</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Symptom: HTTP call to external API taking 2000ms
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Investigation:
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>├─ Service: Payment gateway
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>├─ Latency: Stable at 2000ms
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>├─ No errors, just slow
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>└─ Root cause: Payment service is slow (not our code)
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>Options:
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>├─ Async call: Don&#39;t wait for payment response
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>├─ Cache: Cache payment status
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>├─ Timeout: Fail fast after 500ms
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>└─ Different provider: Switch to faster service
+</code></pre></div>
+<h3 id="bottleneck-lock-contention">Bottleneck: Lock Contention</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Symptom: P95 latency starts at 200ms, increases to 1000ms
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Investigation:
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>├─ CPU: Stable
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>├─ Memory: Stable
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>├─ Database: Shows lock wait times increasing
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>└─ Root cause: Multiple users updating same row
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>Solution:
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>├─ Reduce lock scope: Smaller transactions
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>├─ Add retries: Optimistic locking
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>├─ Sharding: Distribute data to reduce contention
+</code></pre></div>
+<hr />
+<h2 id="step-5-make-optimization-decisions">Step 5: Make Optimization Decisions</h2>
+<h3 id="before-optimization">Before Optimization</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Gatling Report:
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>├─ P95 Latency: 450ms
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>├─ P99 Latency: 1200ms
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>└─ Success Rate: 99.2%
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>Datadog Analysis:
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>├─ Database Query: 380ms (82% of latency)
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>├─ No CPU bottleneck
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>├─ No memory issues
+</code></pre></div>
+<h3 id="decision">Decision</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Root Cause: Database index missing
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Action: Add index on frequently searched column
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Expected Result: P95 latency 450ms → 100ms
+</code></pre></div>
+<h3 id="after-optimization">After Optimization</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Gatling Report (re-run same load test):
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├─ P95 Latency: 100ms ✅ (was 450ms, 78% improvement)
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>├─ P99 Latency: 250ms ✅ (was 1200ms, 79% improvement)
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>└─ Success Rate: 99.8% ✅ (was 99.2%)
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>Datadog Analysis:
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>├─ Database Query: 20ms ✅ (was 380ms)
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>└─ Total: 95ms ✅ (was 465ms)
+</code></pre></div>
+<hr />
+<h2 id="common-analysis-scenarios">Common Analysis Scenarios</h2>
+<h3 id="scenario-1-linear-latency-increase">Scenario 1: Linear Latency Increase</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Graph:
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Latency ↑
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    |     ╱────────
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    |   ╱
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    | ╱
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    └──────→ Load
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>Interpretation: System scales linearly
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>Action: Normal, acceptable behavior
+</code></pre></div>
+<h3 id="scenario-2-sudden-spike">Scenario 2: Sudden Spike</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Graph:
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Latency ↑
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    |           ╱─────
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    |         ╱
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    |       ╱
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    |     ╱
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    └───────→ Load
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>Interpretation: Threshold found (cache full? connection pool exhausted?)
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>Action: Investigate at that load level
+</code></pre></div>
+<h3 id="scenario-3-stable-then-crash">Scenario 3: Stable Then Crash</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Graph:
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Latency ↑
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    |  ────────╱
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    |         ╱
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    |        ╱
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    |       ╱ CRASH
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    └────────→ Load
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>Interpretation: System breaks at specific load
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>Action: Find and fix the breaking point
+</code></pre></div>
+<hr />
+<h2 id="documentation-template">Documentation Template</h2>
+<p>After each load test, document:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="gu">## Load Test: Lab 1 Basic HTTP</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="gu">### Test Configuration</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="k">-</span><span class="w"> </span>Users: 2 new/sec for 15 seconds
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">-</span><span class="w"> </span>Total requests: 30
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="k">-</span><span class="w"> </span>Duration: 15 seconds
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">-</span><span class="w"> </span>Date: 2026-04-12
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="gu">### Gatling Results</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="k">-</span><span class="w"> </span>Success rate: 100%
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="k">-</span><span class="w"> </span>P95 latency: 180ms
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="k">-</span><span class="w"> </span>P99 latency: 450ms
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="k">-</span><span class="w"> </span>Max latency: 600ms
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="gu">### Datadog Analysis</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="k">-</span><span class="w"> </span>CPU: peaked at 35%
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="k">-</span><span class="w"> </span>Memory: peaked at 2.1GB
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="k">-</span><span class="w"> </span>Slowest service: API Gateway (avg 150ms)
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="gu">### Conclusions</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="k">-</span><span class="w"> </span>System behaves well under light load
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="k">-</span><span class="w"> </span>No bottlenecks identified
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="k">-</span><span class="w"> </span>Ready for more aggressive testing
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="gu">### Next Steps</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="k">-</span><span class="w"> </span>Run ramp test to find performance curve
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="k">-</span><span class="w"> </span>Run spike test for resilience
+</code></pre></div>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Compare Gatling metrics with Datadog insights</strong></li>
+<li><strong>Identify bottleneck services via traces</strong></li>
+<li><strong>Root cause analysis guides optimization</strong></li>
+<li><strong>Re-test to verify improvements</strong></li>
+<li><strong>Document findings for team knowledge</strong></li>
+</ol>
+<hr />
+<h2 id="navigation">Navigation</h2>
+<p><strong>← Previous</strong>: <a href="../15-dashboard-queries/">Dashboard Queries</a><br />
+<strong>→ Next</strong>: <a href="../17-custom-feeders/">Advanced Topics</a><br />
+<strong>↑ Up</strong>: <a href="../../">Documentation Index</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="../../js/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

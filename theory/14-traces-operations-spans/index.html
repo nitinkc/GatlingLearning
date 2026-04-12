@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Learning Team">
+        <link rel="canonical" href="https://nitinkc.github.io/GatlingLearning/theory/14-traces-operations-spans/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>14. Traces & Spans - Performance Testing with Gatling</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="https://unpkg.com/mermaid@10/dist/mermaid.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Performance Testing with Gatling</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">🏠 Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📚 Theory</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01-what-is-performance-testing/" class="dropdown-item">01. What is Performance Testing?</a>
+</li>
+                                    
+<li>
+    <a href="../02-key-metrics/" class="dropdown-item">02. Key Metrics</a>
+</li>
+                                    
+<li>
+    <a href="../03-load-testing-methodology/" class="dropdown-item">03. Load Testing Methodology</a>
+</li>
+                                    
+<li>
+    <a href="../04-open-load-patterns/" class="dropdown-item">04. Open Load Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../05-performance-targets-slas/" class="dropdown-item">05. Performance Targets & SLAs</a>
+</li>
+                                    
+<li>
+    <a href="../06-common-pitfalls/" class="dropdown-item">06. Common Pitfalls</a>
+</li>
+                                    
+<li>
+    <a href="../07-gatling-architecture/" class="dropdown-item">07. Gatling Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../08-simulation-lifecycle/" class="dropdown-item">08. Simulation Lifecycle</a>
+</li>
+                                    
+<li>
+    <a href="../09-http-vs-kafka/" class="dropdown-item">09. HTTP vs Kafka</a>
+</li>
+                                    
+<li>
+    <a href="../10-scenarios-and-feeders/" class="dropdown-item">10. Scenarios & Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../11-checks-and-assertions/" class="dropdown-item">11. Checks & Assertions</a>
+</li>
+                                    
+<li>
+    <a href="../12-session-and-correlation/" class="dropdown-item">12. Session & Correlation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">🔬 Labs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../labs/22-lab-overview/" class="dropdown-item">Lab Overview</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/23-lab-basic-http/" class="dropdown-item">Lab 1 - Basic HTTP</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/24-lab-http-feeders/" class="dropdown-item">Lab 2 - HTTP Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/25-lab-checks-validation/" class="dropdown-item">Lab 3 - Checks & Validation</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/26-lab-load-profiles/" class="dropdown-item">Lab 4 - Load Profiles</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/27-lab-crud-operations/" class="dropdown-item">Lab 5 - CRUD Operations</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/28-lab-kafka-producer/" class="dropdown-item">Lab 6 - Kafka Producer</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/29-lab-kafka-feeders/" class="dropdown-item">Lab 7 - Kafka Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/30-lab-advanced-patterns/" class="dropdown-item">Lab 8 - Advanced Patterns</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📊 Monitoring & Advanced</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../13-datadog-integration/" class="dropdown-item">13. Datadog Integration</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">14. Traces & Spans</a>
+</li>
+                                    
+<li>
+    <a href="../15-dashboard-queries/" class="dropdown-item">15. Dashboard Queries</a>
+</li>
+                                    
+<li>
+    <a href="../16-load-test-analysis/" class="dropdown-item">16. Load Test Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../17-custom-feeders/" class="dropdown-item">17. Custom Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../18-advanced-patterns/" class="dropdown-item">18. Advanced Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../19-optimization-tips/" class="dropdown-item">19. Optimization Tips</a>
+</li>
+                                    
+<li>
+    <a href="../20-distributed-testing/" class="dropdown-item">20. Distributed Testing</a>
+</li>
+                                    
+<li>
+    <a href="../21-quick-reference/" class="dropdown-item">21. Quick Reference</a>
+</li>
+                                    
+<li>
+    <a href="../22-glossary/" class="dropdown-item">22. Glossary</a>
+</li>
+                                    
+<li>
+    <a href="../23-run-commands/" class="dropdown-item">23. Run Commands</a>
+</li>
+                                    
+<li>
+    <a href="../24-faq/" class="dropdown-item">24. FAQ</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning" class="nav-link">🔗 GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../13-datadog-integration/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../15-dashboard-queries/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning/edit/master/docs/theory/14-traces-operations-spans.md" class="nav-link">Edit on nitinkc/GatlingLearning
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#traces-operations-spans" class="nav-link">Traces, Operations &amp; Spans</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#what-is-a-trace" class="nav-link">What is a Trace?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#spans-vs-operations-vs-traces" class="nav-link">Spans vs Operations vs Traces</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#what-are-operations" class="nav-link">What are Operations?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#what-are-annotations-tags" class="nav-link">What are Annotations (Tags)?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#client-operations-what-http-requests-show" class="nav-link">Client Operations: What HTTP Requests Show</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#tracing-architecture-in-datadog" class="nav-link">Tracing Architecture in Datadog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#example-complete-trace-during-load-test" class="nav-link">Example: Complete Trace During Load Test</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#how-to-query-traces-in-datadog" class="nav-link">How to Query Traces in Datadog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#reading-datadog-traces" class="nav-link">Reading Datadog Traces</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#identifying-bottlenecks" class="nav-link">Identifying Bottlenecks</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-bottleneck-patterns" class="nav-link">Common Bottleneck Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices" class="nav-link">Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#key-takeaways" class="nav-link">Key Takeaways</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#navigation" class="nav-link">Navigation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="traces-operations-spans">Traces, Operations &amp; Spans</h1>
+<h2 id="overview">Overview</h2>
+<p>Distributed tracing shows the <strong>complete journey</strong> of a single request through your system:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>User Request
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    ↓
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>API Gateway (5ms)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    ↓
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Authentication Service (10ms)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    ↓
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Business Logic (100ms)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    ↓
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Database Query (400ms) ← BOTTLENECK
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    ↓
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Response Serialization (50ms)
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    ↓
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Network (35ms)
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>────────────────
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>Total: 600ms
+</code></pre></div>
+<hr />
+<h2 id="what-is-a-trace">What is a Trace?</h2>
+<p>A <strong>trace</strong> is a complete record of a request's journey through your entire distributed system, from the initial entry point to the final response. Traces show you exactly what happened at every step — not just aggregate metrics.</p>
+<h3 id="trace-anatomy">Trace Anatomy</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Incoming Request (HTTP)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    ↓
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Entry Service (Trace Starts)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    ├─ Operation 1: Authenticate User
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    │   └─ Span: Check cache
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    │   └─ Span: Query database
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    ├─ Operation 2: Validate Request
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    │   └─ Span: Schema validation
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    │
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    ├─ Operation 3: Call Downstream Service A
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    │   └─ Span: Network call to Service A
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    │       └─ Nested Operation in Service A: Process Data
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    │           └─ Span: Database query
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    │           └─ Span: Cache write
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    ├─ Operation 4: Call Downstream Service B
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    │   └─ Span: Network call to Service B
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    │
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    └─ Operation 5: Build Response
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        └─ Span: Serialize response
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    ↓
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>Response Sent (Trace Ends)
+</code></pre></div>
+<hr />
+<h2 id="spans-vs-operations-vs-traces">Spans vs Operations vs Traces</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trace</strong></td>
+<td>Complete request journey across all services</td>
+<td><code>GET /api/orders</code> start-to-finish</td>
+</tr>
+<tr>
+<td><strong>Span</strong></td>
+<td>Individual unit of work (DB query, network call, function)</td>
+<td><code>db.query: SELECT * FROM orders</code></td>
+</tr>
+<tr>
+<td><strong>Operation</strong></td>
+<td>Named logical grouping of spans</td>
+<td><code>POST /api/orders</code>, <code>userService.authenticate()</code></td>
+</tr>
+<tr>
+<td><strong>Service</strong></td>
+<td>The application/microservice doing the work</td>
+<td><code>order-api</code>, <code>user-service</code>, <code>payment-service</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="visual-example">Visual Example</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Trace ID: abc123def456
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├─ Span 1: request_handler (operation: POST /api/orders)
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>│   ├─ Span 1.1: auth_check (operation: authenticate_user)
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>│   │   ├─ Span 1.1.1: redis_get (operation: cache_lookup)
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>│   │   │   Duration: 2ms  |  Tags: cache_hit=true
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>│   │
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>│   ├─ Span 1.2: validate_order (operation: validate_request)
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>│   │   └─ Span 1.2.1: schema_validate — Duration: 1ms
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>│   │
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>│   ├─ Span 1.3: rpc_call_payment_service (operation: process_payment)
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>│   │   Service: payment-service
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>│   │   Duration: 150ms
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>│   │
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>│   Duration: 156ms total (entire request)
+</code></pre></div>
+<hr />
+<h2 id="what-are-operations">What are Operations?</h2>
+<p>An <strong>operation</strong> is the name assigned to a span describing the work being done. It's how Datadog groups similar work together for filtering and analysis.</p>
+<h3 id="examples-of-operations">Examples of Operations</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;GET /api/users/{id}&quot;</span><span class="p">)</span><span class="w">        </span><span class="c1">// HTTP Request</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;db.query.select&quot;</span><span class="p">)</span><span class="w">             </span><span class="c1">// Database</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;redis.get&quot;</span><span class="p">)</span><span class="w">                   </span><span class="c1">// Cache</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;payment-service.process&quot;</span><span class="p">)</span><span class="w">     </span><span class="c1">// RPC/Service Call</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;kafka.send&quot;</span><span class="p">)</span><span class="w">                  </span><span class="c1">// Message Queue</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;calculate_discount&quot;</span><span class="p">)</span><span class="w">          </span><span class="c1">// Custom business logic</span>
+</code></pre></div>
+<h3 id="setting-operations-in-code">Setting Operations in Code</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">public</span><span class="w"> </span><span class="n">Order</span><span class="w"> </span><span class="nf">processOrder</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">orderId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">Span</span><span class="w"> </span><span class="n">span</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tracer</span><span class="p">.</span><span class="na">spanBuilder</span><span class="p">(</span><span class="s">&quot;process_order&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;order.id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">orderId</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="p">.</span><span class="na">startSpan</span><span class="p">();</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="n">Order</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fetchOrder</span><span class="p">(</span><span class="n">orderId</span><span class="p">);</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="n">Span</span><span class="w"> </span><span class="n">paymentSpan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tracer</span><span class="p">.</span><span class="na">spanBuilder</span><span class="p">(</span><span class="s">&quot;process_payment&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">            </span><span class="p">.</span><span class="na">setParent</span><span class="p">(</span><span class="n">span</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">            </span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;payment.amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">.</span><span class="na">getTotal</span><span class="p">())</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">            </span><span class="p">.</span><span class="na">startSpan</span><span class="p">();</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">            </span><span class="n">processPayment</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">            </span><span class="n">paymentSpan</span><span class="p">.</span><span class="na">end</span><span class="p">();</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">order</span><span class="p">;</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">        </span><span class="n">span</span><span class="p">.</span><span class="na">end</span><span class="p">();</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="what-are-annotations-tags">What are Annotations (Tags)?</h2>
+<p><strong>Annotations</strong> are markers/tags added to spans to provide context and searchability. They let you filter, search, and group traces in Datadog.</p>
+<h3 id="standard-tags">Standard Tags</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;http.method&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;POST&quot;</span><span class="p">);</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;http.status_code&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">);</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;http.url&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/api/orders&quot;</span><span class="p">);</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;error.message&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Timeout&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="custom-business-tags">Custom Business Tags</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;user.id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user-123&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;order.id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;order-456&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;environment&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;production&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;feature.flag&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;new-checkout&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;cache.hit&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="performance-tags">Performance Tags</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;db.rows_returned&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;api.response_size_bytes&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">);</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;queue.message_size&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;retry.attempt&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="adding-annotations-in-a-controller">Adding Annotations in a Controller</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nd">@PostMapping</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kd">public</span><span class="w"> </span><span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">Order</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">createOrder</span><span class="p">(</span><span class="nd">@RequestBody</span><span class="w"> </span><span class="n">OrderRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">Span</span><span class="w"> </span><span class="n">span</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Span</span><span class="p">.</span><span class="na">current</span><span class="p">();</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="n">span</span><span class="p">.</span><span class="na">setAllAttributes</span><span class="p">(</span><span class="n">Attributes</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;customer.id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getCustomerId</span><span class="p">())</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;order.total_amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getTotal</span><span class="p">())</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;order.item_count&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getItems</span><span class="p">().</span><span class="na">size</span><span class="p">())</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">());</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">        </span><span class="n">Order</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">orderService</span><span class="p">.</span><span class="na">saveOrder</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">        </span><span class="n">span</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;order.id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">saved</span><span class="p">.</span><span class="na">getId</span><span class="p">());</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ResponseEntity</span><span class="p">.</span><span class="na">status</span><span class="p">(</span><span class="mi">201</span><span class="p">).</span><span class="na">body</span><span class="p">(</span><span class="n">saved</span><span class="p">);</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">        </span><span class="n">span</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">        </span><span class="n">span</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="s">&quot;error.message&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="client-operations-what-http-requests-show">Client Operations: What HTTP Requests Show</h2>
+<p>When Datadog instruments your app, it captures all <strong>outbound HTTP calls</strong> (client-side tracing):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Outbound HTTP Call: Service A → Service B
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Operation: POST https://payment-service:8080/api/process-payment
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Span Details:
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>├─ Duration: 145ms
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>├─ Method: POST
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>├─ Response Status: 200
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>├─ Request Body Size: 512 bytes
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>├─ Response Body Size: 1024 bytes
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>└─ Tags:
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    ├─ http.status_code: 200
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>    ├─ http.method: POST
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>    ├─ peer.service: payment-service
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    ├─ span.kind: client
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>    └─ error: false
+</code></pre></div>
+<h3 id="what-you-can-extract-from-client-traces">What You Can Extract from Client Traces</h3>
+<p><strong>1. Service Dependencies</strong> — see exactly who calls who:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>order-api   →  payment-service  (all HTTP calls)
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>            →  user-service
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>payment-service → bank-gateway  (external APIs)
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>user-service    → redis cache
+</code></pre></div></p>
+<p><strong>2. Latency Breakdown</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Request to order-api: GET /api/orders
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├─ Request parsing:           1ms
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>├─ Authentication:            3ms
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>├─ Call payment-service:    145ms  ← Slowest part!
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>│   └─ payment-service:     140ms
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>├─ Database write:            5ms
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>└─ Response serialization:    2ms
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>Total: 156ms
+</code></pre></div></p>
+<p><strong>3. Database Query Details</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>├─ db.query: SELECT * FROM users WHERE id = ?  — 5ms, rows: 1
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>├─ db.query: INSERT INTO orders (...)          — 8ms, rows: 1
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>└─ db.query: UPDATE inventory SET stock = ...  — 3ms, rows: 1
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Total database time: 16ms (out of 156ms)
+</code></pre></div></p>
+<p><strong>4. Cache Operations</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>├─ redis.get: user:123    — 2ms, cache.hit: true  ✓
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>├─ redis.set: order:456   — 1ms, ttl: 3600
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>└─ redis.del: user:123:tmp — 1ms
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Cache hit rate: 85% ✓
+</code></pre></div></p>
+<p><strong>5. Error Propagation</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>bank-gateway timeout (500)
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  → payment-service returns 503
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    → order-api returns 503 to client
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>Full error chain visible in one trace
+</code></pre></div></p>
+<hr />
+<h2 id="tracing-architecture-in-datadog">Tracing Architecture in Datadog</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Your Application (with APM Agent)
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>│
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>├─ Generates Spans (automatic instrumentation)
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>│  ├─ HTTP requests/responses
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>│  ├─ Database queries
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>│  ├─ Cache operations
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>│  ├─ Kafka sends/receives
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>│  └─ Custom code (manual)
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>│
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>├─ Adds Tags/Annotations
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>│  ├─ service name, environment
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>│  ├─ http.status_code, error
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>│  └─ custom business tags
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>│
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>└─ Datadog Agent → Datadog Backend
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>   └─ Correlates spans by trace ID
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>   └─ Builds waterfall view
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>   └─ Calculates latencies
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>   └─ Detects anomalies
+</code></pre></div>
+<h3 id="java-apm-setup">Java APM Setup</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>java<span class="w"> </span>-javaagent:dd-java-agent.jar<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">     </span>-Ddd.service<span class="o">=</span>order-api<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">     </span>-Ddd.env<span class="o">=</span>staging<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">     </span>-Ddd.version<span class="o">=</span><span class="m">1</span>.0.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">     </span>-Ddd.trace.sample.rate<span class="o">=</span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">     </span>-jar<span class="w"> </span>application.jar
+</code></pre></div>
+<hr />
+<h2 id="example-complete-trace-during-load-test">Example: Complete Trace During Load Test</h2>
+<p>During a Gatling load test at 1000 TPS:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Trace ID: load-test-xyz-001
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Request: POST /api/transaction (from Gatling at t=0s)
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>Timeline:
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>0ms    → Request enters order-api
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>2ms    → Check cache (redis.get) — cache.hit=true — 2ms
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>4ms    → Validate transaction — 2ms
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>6ms    → Call payment-service (POST /payment/authorize) — 140ms SLOW!
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>         Inside payment-service:
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>         ├─ Validate payment:    10ms
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>         ├─ Check fraud service: 60ms  ← Even slower!
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>         │   └─ fraud-service calls external API: 55ms
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>         ├─ Database insert:      5ms
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>         └─ Return
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>146ms  → Write to Kafka (kafka.produce) — topic: rtdx-salestxn — 5ms
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>151ms  → Send response — http.status_code=200
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>Total: 151ms
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>Insights:
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>  ✗ fraud-service (60ms) → Scale or add caching
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>  ✗ payment-service bottleneck → Consider batch processing
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>  ✓ Kafka write (5ms) → Fast, no action needed
+</code></pre></div>
+<hr />
+<h2 id="how-to-query-traces-in-datadog">How to Query Traces in Datadog</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a># Find all slow requests (p95 &gt; 500ms)
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>duration:[500ms TO *] service:order-api
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a># Find failed Kafka operations
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>error:true resource_name:&quot;kafka.produce&quot;
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a># Find slow downstream calls
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>service:payment-service duration:[100ms TO *]
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a># Find traces for specific load test
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>tags.load_test:true tags.scenario:kafkaCreateScenario
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a># Correlate high latency with high CPU
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>duration:[500ms TO *]  +  metric:system.cpu.user &gt; 80%
+</code></pre></div>
+<hr />
+<h2 id="reading-datadog-traces">Reading Datadog Traces</h2>
+<h3 id="timeline-view">Timeline View</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>0ms────50ms────100ms────150ms────200ms────250ms────300ms
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>│
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>├─ API Gateway ┤ (5ms)
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>├─ Auth Service        ┤ (10ms)
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>├─ Business Logic ═══════════════════════════════ (400ms)
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>│  ├─ SQL Query                    ══════════════ (350ms)
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>│  └─ Cache Check      ┤ (5ms)
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>└─ Serialization                                  ┤ (50ms)
+</code></pre></div>
+<hr />
+<h2 id="identifying-bottlenecks">Identifying Bottlenecks</h2>
+<h3 id="pattern-1-slow-database-query">Pattern 1: Slow Database Query</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Trace: 600ms total
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>├─ DB Query: 400ms ← 67% of total time
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>└─ Everything else: 200ms
+</code></pre></div>
+<strong>Action</strong>: Add index, add cache, fix N+1</p>
+<h3 id="pattern-2-slow-remote-service">Pattern 2: Slow Remote Service</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Trace: 5000ms total
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>├─ Remote Service Call: 4500ms ← 90%
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>└─ Everything else: 500ms
+</code></pre></div>
+<strong>Action</strong>: Add timeout, retry, cache, or async</p>
+<h3 id="pattern-3-lock-contention">Pattern 3: Lock Contention</h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>├─ SQL Query: 50ms (normal)
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>├─ Lock Wait: 900ms ← HIGH
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>└─ Total: 950ms
+</code></pre></div>
+<strong>Action</strong>: Fix concurrent access, add sharding</p>
+<hr />
+<h2 id="common-bottleneck-patterns">Common Bottleneck Patterns</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Indicator</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slow DB</td>
+<td>SQL spans &gt;100ms</td>
+<td>Add index, cache</td>
+</tr>
+<tr>
+<td>N+1 Query</td>
+<td>Many small SQL spans</td>
+<td>Fix query logic</td>
+</tr>
+<tr>
+<td>Lock Contention</td>
+<td>Lock wait spans</td>
+<td>Add sharding</td>
+</tr>
+<tr>
+<td>Slow Remote Call</td>
+<td>HTTP span &gt;1000ms</td>
+<td>Cache, timeout, async</td>
+</tr>
+<tr>
+<td>Memory GC</td>
+<td>GC spans in traces</td>
+<td>Tune JVM</td>
+</tr>
+<tr>
+<td>Thread Starvation</td>
+<td>High queue wait</td>
+<td>Increase threads</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="best-practices">Best Practices</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1">// Good: Clear operation name with tags</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;user.lookup.by_id&quot;</span><span class="p">);</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;user_id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;database.name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;users&quot;</span><span class="p">);</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="c1">// Bad: Vague name, no tags</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="n">span</span><span class="p">.</span><span class="na">setOperationName</span><span class="p">(</span><span class="s">&quot;query&quot;</span><span class="p">);</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">// Always mark errors</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">exception</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="n">span</span><span class="p">.</span><span class="na">setError</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;error.type&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">exception</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getName</span><span class="p">());</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">    </span><span class="n">span</span><span class="p">.</span><span class="na">setTag</span><span class="p">(</span><span class="s">&quot;error.message&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">exception</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Trace</strong> = complete request journey end-to-end</li>
+<li><strong>Span</strong> = individual unit of work</li>
+<li><strong>Operation</strong> = logical name for what the span does</li>
+<li><strong>Annotation/Tag</strong> = searchable context on a span</li>
+<li><strong>Client operations</strong> = all outbound HTTP calls your service makes</li>
+<li><strong>Waterfall reveals</strong> sequential vs parallel bottlenecks</li>
+<li><strong>Use tags</strong> to filter traces from load tests specifically</li>
+</ol>
+<hr />
+<h2 id="navigation">Navigation</h2>
+<p><strong>← Previous</strong>: <a href="../13-datadog-integration/">Datadog Integration</a><br />
+<strong>→ Next</strong>: <a href="../15-dashboard-queries/">Dashboard Queries</a><br />
+<strong>↑ Up</strong>: <a href="../../">Documentation Index</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="../../js/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

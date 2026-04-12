@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Learning Team">
+        <link rel="canonical" href="https://nitinkc.github.io/GatlingLearning/labs/30-lab-advanced-patterns/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Lab 8 - Advanced Patterns - Performance Testing with Gatling</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="https://unpkg.com/mermaid@10/dist/mermaid.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Performance Testing with Gatling</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">🏠 Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📚 Theory</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../theory/01-what-is-performance-testing/" class="dropdown-item">01. What is Performance Testing?</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/02-key-metrics/" class="dropdown-item">02. Key Metrics</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/03-load-testing-methodology/" class="dropdown-item">03. Load Testing Methodology</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/04-open-load-patterns/" class="dropdown-item">04. Open Load Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/05-performance-targets-slas/" class="dropdown-item">05. Performance Targets & SLAs</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/06-common-pitfalls/" class="dropdown-item">06. Common Pitfalls</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/07-gatling-architecture/" class="dropdown-item">07. Gatling Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/08-simulation-lifecycle/" class="dropdown-item">08. Simulation Lifecycle</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/09-http-vs-kafka/" class="dropdown-item">09. HTTP vs Kafka</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/10-scenarios-and-feeders/" class="dropdown-item">10. Scenarios & Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/11-checks-and-assertions/" class="dropdown-item">11. Checks & Assertions</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/12-session-and-correlation/" class="dropdown-item">12. Session & Correlation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">🔬 Labs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../22-lab-overview/" class="dropdown-item">Lab Overview</a>
+</li>
+                                    
+<li>
+    <a href="../23-lab-basic-http/" class="dropdown-item">Lab 1 - Basic HTTP</a>
+</li>
+                                    
+<li>
+    <a href="../24-lab-http-feeders/" class="dropdown-item">Lab 2 - HTTP Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../25-lab-checks-validation/" class="dropdown-item">Lab 3 - Checks & Validation</a>
+</li>
+                                    
+<li>
+    <a href="../26-lab-load-profiles/" class="dropdown-item">Lab 4 - Load Profiles</a>
+</li>
+                                    
+<li>
+    <a href="../27-lab-crud-operations/" class="dropdown-item">Lab 5 - CRUD Operations</a>
+</li>
+                                    
+<li>
+    <a href="../28-lab-kafka-producer/" class="dropdown-item">Lab 6 - Kafka Producer</a>
+</li>
+                                    
+<li>
+    <a href="../29-lab-kafka-feeders/" class="dropdown-item">Lab 7 - Kafka Feeders</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">Lab 8 - Advanced Patterns</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📊 Monitoring & Advanced</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../theory/13-datadog-integration/" class="dropdown-item">13. Datadog Integration</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/14-traces-operations-spans/" class="dropdown-item">14. Traces & Spans</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/15-dashboard-queries/" class="dropdown-item">15. Dashboard Queries</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/16-load-test-analysis/" class="dropdown-item">16. Load Test Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/17-custom-feeders/" class="dropdown-item">17. Custom Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/18-advanced-patterns/" class="dropdown-item">18. Advanced Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/19-optimization-tips/" class="dropdown-item">19. Optimization Tips</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/20-distributed-testing/" class="dropdown-item">20. Distributed Testing</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/21-quick-reference/" class="dropdown-item">21. Quick Reference</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/22-glossary/" class="dropdown-item">22. Glossary</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/23-run-commands/" class="dropdown-item">23. Run Commands</a>
+</li>
+                                    
+<li>
+    <a href="../../theory/24-faq/" class="dropdown-item">24. FAQ</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning" class="nav-link">🔗 GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../29-lab-kafka-feeders/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../theory/13-datadog-integration/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning/edit/master/docs/labs/30-lab-advanced-patterns.md" class="nav-link">Edit on nitinkc/GatlingLearning
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#lab-8-advanced-patterns" class="nav-link">Lab 8: Advanced Patterns</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#learning-objectives" class="nav-link">Learning Objectives</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#real-world-scenario" class="nav-link">Real-World Scenario</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#concept-1-custom-feeders" class="nav-link">Concept 1: Custom Feeders</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#concept-2-throttling" class="nav-link">Concept 2: Throttling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#concept-3-conditional-logic" class="nav-link">Concept 3: Conditional Logic</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#concept-4-groups" class="nav-link">Concept 4: Groups</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code-pattern-advanced-simulation" class="nav-link">Code Pattern: Advanced Simulation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-loops" class="nav-link">Advanced Loops</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#running-the-lab" class="nav-link">Running the Lab</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#key-takeaways" class="nav-link">Key Takeaways</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#navigation" class="nav-link">Navigation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="lab-8-advanced-patterns">Lab 8: Advanced Patterns</h1>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this lab, you'll understand:</p>
+<ul>
+<li>✅ How to create <strong>custom feeders</strong> (beyond CSV)</li>
+<li>✅ How to use <strong>throttling</strong> to limit throughput</li>
+<li>✅ How to implement <strong>conditional logic</strong> in scenarios</li>
+<li>✅ How to use <strong>group()</strong> for complex sub-scenarios</li>
+<li>✅ How to handle <strong>asynchronous patterns</strong></li>
+<li>✅ How to build <strong>production-ready</strong> simulations</li>
+</ul>
+<h2 id="real-world-scenario">Real-World Scenario</h2>
+<p>You've mastered the basics. Now for production-grade complexity:</p>
+<ol>
+<li><strong>Custom feeders</strong>: Generate realistic data on-the-fly (credit cards, IBANs, emails)</li>
+<li><strong>Throttling</strong>: Control maximum throughput (API limits, resource constraints)</li>
+<li><strong>Conditional logic</strong>: Branch based on response (A/B testing, feature flags)</li>
+<li><strong>Groups</strong>: Organize complex scenarios (user types, workflows)</li>
+<li><strong>Async patterns</strong>: Handle non-blocking operations</li>
+</ol>
+<hr />
+<h2 id="concept-1-custom-feeders">Concept 1: Custom Feeders</h2>
+<h3 id="problem-with-csv-feeders">Problem with CSV Feeders</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">csv</span><span class="p">(</span><span class="s">&quot;data/creditcards.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">// Requires pre-generated file</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">// Can&#39;t generate unlimited unique data</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">// Exposed sensitive test data</span>
+</code></pre></div>
+<h3 id="solution-custom-feeder">Solution: Custom Feeder</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Generate credit cards on-the-fly</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">creditCardFeeder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">Stream</span><span class="p">.</span><span class="na">generate</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;cardNumber&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;4532&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">generateRandom</span><span class="p">(</span><span class="mi">12</span><span class="p">));</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;expiry&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;12/26&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;cvv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;%03d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">1000</span><span class="p">)));</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">map</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="p">}).</span><span class="na">iterator</span><span class="p">();</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">// Use in scenario</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">.</span><span class="na">feed</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SequenceFeeder</span><span class="p">(</span><span class="n">creditCardFeeder</span><span class="p">))</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Pay&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="p">.</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/payment&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="p">.</span><span class="na">body</span><span class="p">(</span><span class="n">StringBody</span><span class="p">(</span><span class="s">&quot;{\&quot;cardNumber\&quot;: \&quot;#{cardNumber}\&quot;, \&quot;cvv\&quot;: \&quot;#{cvv}\&quot;}&quot;</span><span class="p">))</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="concept-2-throttling">Concept 2: Throttling</h2>
+<h3 id="problem-unlimited-load">Problem: Unlimited Load</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.</span><span class="na">injectOpen</span><span class="p">(</span><span class="n">constantUsersPerSec</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="na">during</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// 1000 new users per second - uncontrolled</span>
+</code></pre></div>
+<h3 id="solution-throttle-requests">Solution: Throttle Requests</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.</span><span class="na">throttle</span><span class="p">(</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">jumpToRps</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span><span class="w">           </span><span class="c1">// Start at 50 req/sec</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">holdFor</span><span class="p">(</span><span class="mi">30</span><span class="w"> </span><span class="n">seconds</span><span class="p">),</span><span class="w">     </span><span class="c1">// Hold for 30 sec</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">jumpToRps</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="w">          </span><span class="c1">// Jump to 100 req/sec</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">holdFor</span><span class="p">(</span><span class="mi">30</span><span class="w"> </span><span class="n">seconds</span><span class="p">)</span><span class="w">      </span><span class="c1">// Hold for 30 sec</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">)</span>
+</code></pre></div>
+<p>Result: Exactly 50, then 100 requests per second. No spikes.</p>
+<hr />
+<h2 id="concept-3-conditional-logic">Concept 3: Conditional Logic</h2>
+<h3 id="ifthen-logic">If/Then Logic</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.</span><span class="na">exec</span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Check balance&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/account/balance&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="p">.</span><span class="na">check</span><span class="p">(</span><span class="n">jsonPath</span><span class="p">(</span><span class="s">&quot;$.balance&quot;</span><span class="p">).</span><span class="na">saveAs</span><span class="p">(</span><span class="s">&quot;balance&quot;</span><span class="p">))</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">.</span><span class="na">doIf</span><span class="p">(</span><span class="n">session</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Double</span><span class="p">.</span><span class="na">parseDouble</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;balance&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="p">.</span><span class="na">then</span><span class="p">(</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Top up account&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">            </span><span class="p">.</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/account/topup&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">            </span><span class="p">.</span><span class="na">body</span><span class="p">(</span><span class="n">StringBody</span><span class="p">(</span><span class="s">&quot;{\&quot;amount\&quot;: 5000}&quot;</span><span class="p">))</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="concept-4-groups">Concept 4: Groups</h2>
+<h3 id="organize-sub-scenarios">Organize Sub-Scenarios</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">ScenarioBuilder</span><span class="w"> </span><span class="n">browsing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scenario</span><span class="p">(</span><span class="s">&quot;Browsing&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Home&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">))</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Products&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/products&quot;</span><span class="p">));</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">ScenarioBuilder</span><span class="w"> </span><span class="n">purchasing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scenario</span><span class="p">(</span><span class="s">&quot;Purchasing&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Add to cart&quot;</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/cart&quot;</span><span class="p">))</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Checkout&quot;</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/checkout&quot;</span><span class="p">));</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">ScenarioBuilder</span><span class="w"> </span><span class="n">combined</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scenario</span><span class="p">(</span><span class="s">&quot;Full Journey&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="n">browsing</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">.</span><span class="na">group</span><span class="p">(</span><span class="n">purchasing</span><span class="p">);</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="n">setUp</span><span class="p">(</span><span class="n">combined</span><span class="p">.</span><span class="na">injectOpen</span><span class="p">(</span><span class="n">constantUsersPerSec</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="na">during</span><span class="p">(</span><span class="mi">60</span><span class="p">)))</span>
+</code></pre></div>
+<hr />
+<h2 id="code-pattern-advanced-simulation">Code Pattern: Advanced Simulation</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Sim08_AdvancedPatterns</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Simulation</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="c1">// 1. Custom Feeder</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">dynamicFeeder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="n">Stream</span><span class="p">.</span><span class="na">generate</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">            </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">            </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;userId&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">());</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">            </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;email&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;@example.com&quot;</span><span class="p">);</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">map</span><span class="p">;</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">        </span><span class="p">}).</span><span class="na">iterator</span><span class="p">();</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="c1">// 2. Scenario with advanced patterns</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="n">ScenarioBuilder</span><span class="w"> </span><span class="n">advancedJourney</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scenario</span><span class="p">(</span><span class="s">&quot;Advanced Patterns&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">        </span><span class="p">.</span><span class="na">feed</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SequenceFeeder</span><span class="p">(</span><span class="n">dynamicFeeder</span><span class="p">))</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">        </span><span class="c1">// Create account</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">        </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Register&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">            </span><span class="p">.</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/register&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">            </span><span class="p">.</span><span class="na">body</span><span class="p">(</span><span class="n">StringBody</span><span class="p">(</span><span class="s">&quot;{\&quot;email\&quot;: \&quot;#{email}\&quot;}&quot;</span><span class="p">))</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">            </span><span class="p">.</span><span class="na">check</span><span class="p">(</span><span class="n">jsonPath</span><span class="p">(</span><span class="s">&quot;$.userId&quot;</span><span class="p">).</span><span class="na">saveAs</span><span class="p">(</span><span class="s">&quot;userId&quot;</span><span class="p">))</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">        </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">        </span><span class="c1">// Conditional: Premium users do more</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">        </span><span class="p">.</span><span class="na">doIf</span><span class="p">(</span><span class="n">session</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">random</span><span class="p">.</span><span class="na">nextDouble</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.7</span><span class="p">)</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">            </span><span class="p">.</span><span class="na">then</span><span class="p">(</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">                </span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Upgrade to premium&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">                    </span><span class="p">.</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/upgrade&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">            </span><span class="p">)</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">        </span><span class="c1">// Complex workflow with repeat</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">        </span><span class="p">.</span><span class="na">repeat</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">            </span><span class="p">.</span><span class="na">on</span><span class="p">(</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="w">                </span><span class="n">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;View product&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">                    </span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/product/&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">random</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="w">                    </span><span class="p">.</span><span class="na">check</span><span class="p">(</span><span class="n">status</span><span class="p">().</span><span class="na">is</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a><span class="w">                </span><span class="p">)</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="w">                </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="w">            </span><span class="p">);</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a>
+<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="w">    </span><span class="c1">// 3. Setup with throttling</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a><span class="w">        </span><span class="n">setUp</span><span class="p">(</span>
+<a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a><span class="w">            </span><span class="n">advancedJourney</span>
+<a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a><span class="w">                </span><span class="p">.</span><span class="na">injectOpen</span><span class="p">(</span><span class="n">constantUsersPerSec</span><span class="p">(</span><span class="mi">50</span><span class="p">).</span><span class="na">during</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+<a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a><span class="w">                </span><span class="p">.</span><span class="na">throttle</span><span class="p">(</span>
+<a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a><span class="w">                    </span><span class="n">rampRps</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="na">to</span><span class="p">(</span><span class="mi">100</span><span class="p">).</span><span class="na">during</span><span class="p">(</span><span class="mi">30</span><span class="w"> </span><span class="n">seconds</span><span class="p">),</span>
+<a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a><span class="w">                    </span><span class="n">holdFor</span><span class="p">(</span><span class="mi">30</span><span class="w"> </span><span class="n">seconds</span><span class="p">)</span>
+<a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a><span class="w">                </span><span class="p">)</span>
+<a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="w">        </span><span class="p">)</span>
+<a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="w">        </span><span class="p">.</span><span class="na">assertions</span><span class="p">(</span>
+<a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="w">            </span><span class="n">global</span><span class="p">().</span><span class="na">responseTime</span><span class="p">().</span><span class="na">p95</span><span class="p">().</span><span class="na">lt</span><span class="p">(</span><span class="mi">2000</span><span class="p">),</span>
+<a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a><span class="w">            </span><span class="n">global</span><span class="p">().</span><span class="na">successfulRequests</span><span class="p">().</span><span class="na">percent</span><span class="p">().</span><span class="na">gt</span><span class="p">(</span><span class="mf">99.0</span><span class="p">)</span>
+<a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a><span class="w">        </span><span class="p">);</span>
+<a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="advanced-loops">Advanced Loops</h2>
+<h3 id="repeat-loops">Repeat Loops</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.</span><span class="na">repeat</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="p">.</span><span class="na">on</span><span class="p">(</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">        </span><span class="n">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Request&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/api&quot;</span><span class="p">))</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">// User executes same request 10 times</span>
+</code></pre></div>
+<h3 id="while-loops">While Loops</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.</span><span class="na">asLongAs</span><span class="p">(</span><span class="n">session</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="p">.</span><span class="na">on</span><span class="p">(</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">        </span><span class="n">exec</span><span class="p">(</span><span class="n">session</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="p">)</span>
+</code></pre></div>
+<h3 id="foreach-loops">Foreach Loops</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.</span><span class="na">foreach</span><span class="p">(</span><span class="s">&quot;#{ids}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="p">.</span><span class="na">on</span><span class="p">(</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">        </span><span class="n">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Get&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/item/#{id}&quot;</span><span class="p">))</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="running-the-lab">Running the Lab</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>/Users/sgovinda/Learn/GatlingLearning
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>mvn<span class="w"> </span>gatling:test<span class="w"> </span>-Dgatling.simulationClass<span class="o">=</span>io.learn.gatling.simulations.http.Sim08_AdvancedPatterns
+</code></pre></div>
+<h3 id="expected-results">Expected Results</h3>
+<ul>
+<li>✅ Custom feeder generates unique data</li>
+<li>✅ Throttling maintains target RPS</li>
+<li>✅ Conditional branches execute</li>
+<li>✅ Groups organize scenarios</li>
+<li>✅ 3000+ requests total</li>
+<li>✅ &gt;99% success rate</li>
+<li>✅ p95 latency &lt;2000ms</li>
+</ul>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Custom feeders</strong> generate unlimited realistic data</li>
+<li><strong>Throttling</strong> controls throughput precisely</li>
+<li><strong>Conditional logic</strong> enables complex scenarios</li>
+<li><strong>Groups</strong> organize sub-scenarios</li>
+<li><strong>Loops</strong> (repeat, while, foreach) handle repetition</li>
+<li><strong>Advanced patterns</strong> are production-ready</li>
+</ol>
+<hr />
+<h2 id="navigation">Navigation</h2>
+<p><strong>← Previous</strong>: <a href="../29-lab-kafka-feeders/">Lab 7: Kafka with Feeders</a><br />
+<strong>→ Next</strong>: <a href="../../theory/13-datadog-integration/">Monitoring &amp; Analysis</a><br />
+<strong>↑ Up</strong>: <a href="../22-lab-overview/">Lab Overview</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="../../js/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Learning Team">
+        <link rel="canonical" href="https://nitinkc.github.io/GatlingLearning/theory/06-common-pitfalls/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>06. Common Pitfalls - Performance Testing with Gatling</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="https://unpkg.com/mermaid@10/dist/mermaid.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Performance Testing with Gatling</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">🏠 Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📚 Theory</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01-what-is-performance-testing/" class="dropdown-item">01. What is Performance Testing?</a>
+</li>
+                                    
+<li>
+    <a href="../02-key-metrics/" class="dropdown-item">02. Key Metrics</a>
+</li>
+                                    
+<li>
+    <a href="../03-load-testing-methodology/" class="dropdown-item">03. Load Testing Methodology</a>
+</li>
+                                    
+<li>
+    <a href="../04-open-load-patterns/" class="dropdown-item">04. Open Load Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../05-performance-targets-slas/" class="dropdown-item">05. Performance Targets & SLAs</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">06. Common Pitfalls</a>
+</li>
+                                    
+<li>
+    <a href="../07-gatling-architecture/" class="dropdown-item">07. Gatling Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../08-simulation-lifecycle/" class="dropdown-item">08. Simulation Lifecycle</a>
+</li>
+                                    
+<li>
+    <a href="../09-http-vs-kafka/" class="dropdown-item">09. HTTP vs Kafka</a>
+</li>
+                                    
+<li>
+    <a href="../10-scenarios-and-feeders/" class="dropdown-item">10. Scenarios & Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../11-checks-and-assertions/" class="dropdown-item">11. Checks & Assertions</a>
+</li>
+                                    
+<li>
+    <a href="../12-session-and-correlation/" class="dropdown-item">12. Session & Correlation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">🔬 Labs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../labs/22-lab-overview/" class="dropdown-item">Lab Overview</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/23-lab-basic-http/" class="dropdown-item">Lab 1 - Basic HTTP</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/24-lab-http-feeders/" class="dropdown-item">Lab 2 - HTTP Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/25-lab-checks-validation/" class="dropdown-item">Lab 3 - Checks & Validation</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/26-lab-load-profiles/" class="dropdown-item">Lab 4 - Load Profiles</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/27-lab-crud-operations/" class="dropdown-item">Lab 5 - CRUD Operations</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/28-lab-kafka-producer/" class="dropdown-item">Lab 6 - Kafka Producer</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/29-lab-kafka-feeders/" class="dropdown-item">Lab 7 - Kafka Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/30-lab-advanced-patterns/" class="dropdown-item">Lab 8 - Advanced Patterns</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📊 Monitoring & Advanced</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../13-datadog-integration/" class="dropdown-item">13. Datadog Integration</a>
+</li>
+                                    
+<li>
+    <a href="../14-traces-operations-spans/" class="dropdown-item">14. Traces & Spans</a>
+</li>
+                                    
+<li>
+    <a href="../15-dashboard-queries/" class="dropdown-item">15. Dashboard Queries</a>
+</li>
+                                    
+<li>
+    <a href="../16-load-test-analysis/" class="dropdown-item">16. Load Test Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../17-custom-feeders/" class="dropdown-item">17. Custom Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../18-advanced-patterns/" class="dropdown-item">18. Advanced Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../19-optimization-tips/" class="dropdown-item">19. Optimization Tips</a>
+</li>
+                                    
+<li>
+    <a href="../20-distributed-testing/" class="dropdown-item">20. Distributed Testing</a>
+</li>
+                                    
+<li>
+    <a href="../21-quick-reference/" class="dropdown-item">21. Quick Reference</a>
+</li>
+                                    
+<li>
+    <a href="../22-glossary/" class="dropdown-item">22. Glossary</a>
+</li>
+                                    
+<li>
+    <a href="../23-run-commands/" class="dropdown-item">23. Run Commands</a>
+</li>
+                                    
+<li>
+    <a href="../24-faq/" class="dropdown-item">24. FAQ</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning" class="nav-link">🔗 GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../05-performance-targets-slas/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../07-gatling-architecture/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning/edit/master/docs/theory/06-common-pitfalls.md" class="nav-link">Edit on nitinkc/GatlingLearning
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#common-pitfalls-best-practices" class="nav-link">Common Pitfalls &amp; Best Practices</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#pitfalls-what-not-to-do" class="nav-link">Pitfalls: What NOT to Do</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices" class="nav-link">Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#summary-dos-and-donts" class="nav-link">Summary: Do's and Don'ts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#next-steps" class="nav-link">Next Steps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="common-pitfalls-best-practices">Common Pitfalls &amp; Best Practices</h1>
+<h2 id="pitfalls-what-not-to-do">Pitfalls: What NOT to Do</h2>
+<h3 id="pitfall-1-not-using-realistic-think-time">❌ Pitfall 1: Not Using Realistic Think-Time</h3>
+<p><strong>Problem</strong>: Firing requests as fast as possible without pauses between them.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// BAD - No think time</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">scenario</span><span class="p">(</span><span class="s">&quot;Bad User Journey&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Step 1&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/api/products&quot;</span><span class="p">))</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Step 2&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/api/product/123&quot;</span><span class="p">))</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Step 3&quot;</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/api/cart&quot;</span><span class="p">))</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Step 4&quot;</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/api/checkout&quot;</span><span class="p">))</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="c1">// All executed instantly, one after another!</span>
+</code></pre></div>
+<p><strong>Why it's bad</strong>:
+- Real users don't fire requests instantly
+- Real user reads product description (10-30 sec)
+- Real user reviews options (5-15 sec)
+- Real user decides whether to buy (30-60 sec)
+- Your test doesn't reflect reality
+- You're testing code path, not user behavior</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Real flow:
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>GET /api/products → pause 10-30s → GET /api/product/123
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>→ pause 15s → POST /api/cart → pause 20s → POST /api/checkout
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Simulated flow (bad):
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>GET /api/products → GET /api/product/123 → POST /api/cart → POST /api/checkout
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>(All in &lt;100ms, unrealistic spike)
+</code></pre></div>
+<p><strong>Fix</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// GOOD - Realistic think-time</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">scenario</span><span class="p">(</span><span class="s">&quot;Realistic User Journey&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Browse Products&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/api/products&quot;</span><span class="p">))</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">)</span><span class="w">  </span><span class="c1">// 10-30 seconds think time</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;View Product Detail&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/api/product/#{productId}&quot;</span><span class="p">))</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Add to Cart&quot;</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/api/cart&quot;</span><span class="p">))</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Checkout&quot;</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/api/checkout&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>Lesson</strong>: Your test should simulate real user behavior, not optimal network conditions.</p>
+<hr />
+<h3 id="pitfall-2-load-testing-from-single-machine-becoming-bottleneck">❌ Pitfall 2: Load Testing from Single Machine (Becoming Bottleneck)</h3>
+<p><strong>Problem</strong>: Running 10,000 simulated users from your laptop.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>┌─ Your laptop (1 machine)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>│  ├─ 10,000 simulated users
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│  ├─ CPU: 100% (maxed out)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│  ├─ Network: Saturated
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│  └─ Garbage collection pauses
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>└─ API server being tested
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>   ├─ CPU: 20%
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>   └─ &quot;The API is fast!&quot; (not true, your load generator is the bottleneck)
+</code></pre></div>
+<p><strong>Why it's bad</strong>:
+- Single machine has CPU/memory/network limits
+- Gatling JVM becomes bottleneck, not your API
+- Results are meaningless (measuring load generator, not API)
+- Can't simulate realistic request patterns</p>
+<p><strong>Fix</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Option 1: Gatling Enterprise (cloud)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>└─ Distribute load across multiple cloud instances
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Option 2: Self-hosted distribution
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>├─ Run Gatling from multiple machines
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>├─ Coordinate via shared report
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>└─ Aggregate results
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Option 3: Start small, scale gradually
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>├─ 100 users on 1 machine (safe)
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>├─ 1000 users: Still 1 machine (getting risky)
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>├─ 10,000 users: Use 10 machines (1000 users each)
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>└─ Rule: 1,000 users max per machine
+</code></pre></div>
+<p><strong>Lesson</strong>: As load increases, distribute it across machines.</p>
+<hr />
+<h3 id="pitfall-3-testing-production-without-permission">❌ Pitfall 3: Testing Production Without Permission</h3>
+<p><strong>Problem</strong>: Running load test against production database/API.</p>
+<p><strong>Why it's bad</strong>:
+- Real users experience your test (slow site for actual customers)
+- Logs polluted with fake data
+- Alerts triggered (fire department called for practice drill)
+- Load test metrics mixed with real user metrics
+- Compliance violation (using production for testing)</p>
+<p><strong>Fix</strong>: Always test in <strong>staging</strong> environment.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Environment hierarchy:
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Local Dev
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>├─ Fast iteration
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>├─ Unrealistic scale
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>└─ Solo testing
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>Staging/QA
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>├─ Production-like setup (data, scale, infrastructure)
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>├─ Safe to overload
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>├─ Load testing here ✓ CORRECT
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>└─ Results reliable
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>Production
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>├─ Real users
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>├─ Real data
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>├─ Real revenue impact
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>└─ Load testing here ✗ NEVER
+</code></pre></div>
+<p><strong>Lesson</strong>: Load test only in staging.</p>
+<hr />
+<h3 id="pitfall-4-ignoring-the-warm-up-phase">❌ Pitfall 4: Ignoring the Warm-Up Phase</h3>
+<p><strong>Problem</strong>: Starting test immediately without system warm-up.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Test results (no warm-up):
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├─ First minute: p95 = 5000ms (JVM warming up, caches cold)
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>├─ Second minute: p95 = 2000ms (some caches warming)
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>├─ Third minute: p95 = 500ms (steady state)
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>├─ ...10 minutes...
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>├─ p95 = 500ms (stable)
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>│
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>└─ Average: 1000ms (high, but misleading!)
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>   (Skewed by cold-start phase)
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Correct approach (with warm-up):
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>├─ Warm-up (5 min) + skip in results
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>├─ Actual test (15 min) + measure
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>└─ p95 = 500ms (real, stable performance)
+</code></pre></div>
+<p><strong>Why it's important</strong>:
+- JVM just-in-time compiler needs warm-up
+- Database query caches need population
+- Connection pools need initialization
+- First few minutes unrealistically slow</p>
+<p><strong>Fix</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">setUp</span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="n">scenario</span><span class="p">.</span><span class="na">injectOpen</span><span class="p">(</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">        </span><span class="n">constantUsersPerSec</span><span class="p">(</span><span class="mi">100</span><span class="p">).</span><span class="na">during</span><span class="p">(</span><span class="mi">300</span><span class="p">),</span><span class="w">  </span><span class="c1">// Warm-up: 5 min</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">        </span><span class="n">constantUsersPerSec</span><span class="p">(</span><span class="mi">100</span><span class="p">).</span><span class="na">during</span><span class="p">(</span><span class="mi">900</span><span class="p">)</span><span class="w">   </span><span class="c1">// Actual test: 15 min</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">)</span>
+</code></pre></div>
+<p>Then analyze only the second phase (after warm-up).</p>
+<p><strong>Lesson</strong>: Add 5-10 minute warm-up before measuring actual metrics.</p>
+<hr />
+<h3 id="pitfall-5-only-tracking-mean-latency">❌ Pitfall 5: Only Tracking Mean Latency</h3>
+<p><strong>Problem</strong>: Using mean latency to judge performance.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Test results:
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>├─ Mean: 200ms ✓ Looks good!
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>├─ p99: 5000ms ✗ But 1% of users wait 5 seconds!
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Mean is misleading because:
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>└─ 100 requests: 99 at 100ms, 1 at 10,000ms
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>   └─ Mean = (99×100 + 1×10,000) ÷ 100 = 199ms
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>      (Mean hides the outlier!)
+</code></pre></div>
+<p><strong>Fix</strong>: Always track percentiles.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.</span><span class="na">assertions</span><span class="p">(</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="n">global</span><span class="p">().</span><span class="na">responseTime</span><span class="p">().</span><span class="na">p50</span><span class="p">().</span><span class="na">lt</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="w">      </span><span class="c1">// Median</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">global</span><span class="p">().</span><span class="na">responseTime</span><span class="p">().</span><span class="na">p95</span><span class="p">().</span><span class="na">lt</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span><span class="w">      </span><span class="c1">// 95th percentile</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">global</span><span class="p">().</span><span class="na">responseTime</span><span class="p">().</span><span class="na">p99</span><span class="p">().</span><span class="na">lt</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span><span class="w">     </span><span class="c1">// 99th percentile</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="n">global</span><span class="p">().</span><span class="na">responseTime</span><span class="p">().</span><span class="na">p99d9</span><span class="p">().</span><span class="na">lt</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span><span class="w">    </span><span class="c1">// 99.9th percentile</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">)</span>
+</code></pre></div>
+<p><strong>Lesson</strong>: Percentiles tell the real story, mean is misleading.</p>
+<hr />
+<h3 id="pitfall-6-not-testing-error-scenarios">❌ Pitfall 6: Not Testing Error Scenarios</h3>
+<p><strong>Problem</strong>: Only testing the happy path (everything succeeds).</p>
+<p><strong>Why it's bad</strong>:
+- Real world has failures (database down, 5xx errors)
+- Cascading failures hidden
+- Circuit breaker behavior untested
+- Error handling code untested</p>
+<p><strong>Fix</strong>: Include error injection in tests.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">scenario</span><span class="p">(</span><span class="s">&quot;Realistic Journey with Errors&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Get products&quot;</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/api/products&quot;</span><span class="p">))</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="c1">// 10% of users see slow/error response</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Get details - sometimes slow&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/api/product/#{productId}&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">        </span><span class="p">.</span><span class="na">simu</span><span class="w"> </span><span class="n">lateServerErrors</span><span class="p">(</span><span class="mf">0.1</span><span class="p">))</span><span class="w">  </span><span class="c1">// 10% return 500</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="p">.</span><span class="na">pause</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="p">.</span><span class="na">exec</span><span class="p">(</span><span class="n">http</span><span class="p">(</span><span class="s">&quot;Add to cart&quot;</span><span class="p">).</span><span class="na">post</span><span class="p">(</span><span class="s">&quot;/api/cart&quot;</span><span class="p">))</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="c1">// ... rest of journey</span>
+</code></pre></div>
+<p><strong>Lesson</strong>: Test realistic failure scenarios.</p>
+<hr />
+<h3 id="pitfall-7-one-test-and-done">❌ Pitfall 7: One Test and Done</h3>
+<p><strong>Problem</strong>: Running single load test and assuming you're done.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Bad approach:
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Run constant load test once → metrics look OK → Deploy ✗
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Missing:
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>├─ Stress test: Where&#39;s the breaking point?
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>├─ Soak test: Stable overnight or memory leak?
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>├─ Spike test: Can we survive viral moment?
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>└─ Re-test after optimization: Did fix work?
+</code></pre></div>
+<p><strong>Fix</strong>: Run multiple test types.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Complete test suite:
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>1. Load Test (baseline)
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>   └─ Does it meet SLAs?
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>2. Ramp Test (capacity)
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>   └─ Where does it break?
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>3. Soak Test (stability)
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>   └─ Stable overnight?
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>4. Spike Test (resilience)
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>   └─ Survives viral moment?
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>Timeline: ~2-3 hours of testing (scheduled)
+</code></pre></div>
+<p><strong>Lesson</strong>: One test reveals one thing. Use multiple tests for comprehensive understanding.</p>
+<hr />
+<h3 id="pitfall-8-not-monitoring-system-during-test">❌ Pitfall 8: Not Monitoring System During Test</h3>
+<p><strong>Problem</strong>: Only looking at Gatling report, ignoring server metrics.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Scenario: Test shows latency increasing, but why?
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>❌ Bad: Only Gatling report
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>├─ Conclusion: &quot;API is slow&quot;
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>└─ Action: Scale API (wastes money)
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>✓ Good: Gatling + Datadog
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>├─ Gatling says: p95 = 1000ms (increasing)
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>├─ Datadog shows: Database CPU = 95% (the real bottleneck)
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>└─ Action: Optimize database (cheaper fix)
+</code></pre></div>
+<p><strong>Fix</strong>: Monitor both client (Gatling) and server (Datadog).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>During test, watch:
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>├─ Gatling console (RPS, latency, errors)
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>├─ Datadog APM (traces, slow operations)
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>├─ Datadog Metrics (CPU, memory, disk)
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>├─ Application logs (errors, exceptions)
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>└─ Database monitoring (slow queries, locks)
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>Tools:
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>├─ Gatling: Response times (client-side)
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>├─ Datadog APM: Where time is spent (server-side)
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>├─ Datadog Metrics: Resource utilization
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>└─ Logs: Error details
+</code></pre></div>
+<p><strong>Lesson</strong>: Monitor both sides to find real bottlenecks.</p>
+<hr />
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="best-practice-1-define-slas-first">✅ Best Practice 1: Define SLAs First</h3>
+<p>Before writing test code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>1. Engage stakeholders
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>   └─ Product: What do users tolerate?
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>   └─ Ops: What&#39;s infrastructure capable of?
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>   └─ Eng: What&#39;s reasonable to achieve?
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>2. Document SLAs
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>   └─ p95 &lt;300ms
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>   └─ p99 &lt;800ms
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>   └─ Success rate &gt;99.9%
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>   └─ Uptime &gt;99.95%
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>3. Build tests to validate SLAs
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>   └─ Test configured with assertions
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>   └─ Fails if SLA not met
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>   └─ Clear pass/fail result
+</code></pre></div>
+<p><strong>Lesson</strong>: SLAs should come first, tests second.</p>
+<hr />
+<h3 id="best-practice-2-test-in-realistic-environments">✅ Best Practice 2: Test in Realistic Environments</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Testing checklist:
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Infrastructure:
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>☐ Staging matches production (same config, scale)
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>☐ Database is production-sized (at least)
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>☐ Network latency simulated (not zero)
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>☐ External services accessible (or mocked realistically)
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>Data:
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>☐ Real data patterns (not synthetic nonsense)
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>☐ Production-sized dataset (not just 100 rows)
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>☐ Realistic skew (80% users browse, 20% purchase)
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>Load:
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>☐ Peak traffic levels (not undersized)
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>☐ Realistic user behavior (think-time, variety)
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>☐ Distribution across features (not single endpoint)
+</code></pre></div>
+<p><strong>Lesson</strong>: Realistic testing = reliable results.</p>
+<hr />
+<h3 id="best-practice-3-establish-baseline-then-optimize">✅ Best Practice 3: Establish Baseline, Then Optimize</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Workflow:
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>1. Baseline test
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>   └─ Run current code/infrastructure
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>   └─ Record: p95=800ms, CPU=70%
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>   └─ This is your baseline (might be bad, but you know it)
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>2. Optimization attempt
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>   └─ Change code: Add caching, optimize query, etc.
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>   └─ Re-test with SAME load
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>3. Compare
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>   └─ p95: 800ms → 300ms ✓ 62% improvement
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>   └─ CPU: 70% → 30% ✓ Much better
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>   └─ Declare success!
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>Why baseline matters:
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>├─ You have a target to beat
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>├─ Optimization benefits are measurable
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>├─ Without baseline, &quot;faster&quot; is subjective
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>└─ Good for reporting improvement to business
+</code></pre></div>
+<p><strong>Lesson</strong>: Baseline first, optimize second, measure improvement.</p>
+<hr />
+<h3 id="best-practice-4-version-control-your-tests">✅ Best Practice 4: Version Control Your Tests</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Git repo structure:
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>gatling-tests/
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>├── README.md (how to run tests)
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>├── src/test/java/simulations/
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>│   ├── baseline_scenario.java
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>│   ├── peak_load_scenario.java
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>│   ├── spike_scenario.java
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>│   └── soak_scenario.java
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>├── src/test/resources/
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>│   ├── data/
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>│   └── bodies/
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>├── reports/
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>│   ├── 2024-01-15-baseline.html
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>│   ├── 2024-01-15-peak.html
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>│   └── ... (historical results)
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>└── pom.xml
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>Benefits:
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>├─ Track changes to scenarios over time
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>├─ Reproduce exact test conditions
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>├─ Share tests with team
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>├─ CI/CD integration easy
+</code></pre></div>
+<p><strong>Lesson</strong>: Treat tests like code—version control them.</p>
+<hr />
+<h3 id="best-practice-5-document-results">✅ Best Practice 5: Document Results</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Test Report Template:
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Date: 2024-01-15
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>Simulation: Peak Load Test
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Environment: Staging
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>Duration: 30 minutes
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>Objectives:
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>- Verify system handles Black Friday traffic
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>- Find breaking point at 10,000 concurrent users
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>Scenario:
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>- 100 new users per second for 30 minutes
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>- Realistic think-time (5-30 second pauses)
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>- CSV feeder with 10,000 product IDs
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>- Equal distribution: 70% browse, 20% purchase, 10% support
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>Results:
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>- Total requests: 180,000
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>- Successful: 179,640 (99.8%) ✓
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>- Failed: 360 (0.2%)
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>- p95 latency: 450ms ✓ (target: &lt;500ms)
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>- p99 latency: 950ms ✓ (target: &lt;1000ms)
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>- Max RPS achieved: 1,850 (during ramp-down)
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>- Peak CPU (server): 78%
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>- Peak memory (server): 4.2GB (stable)
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>Bottlenecks:
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a>- Database query time increasing with load
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a>  ├─ Root cause: Missing index on product.category column
+<a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a>  ├─ Evidence: Datadog shows 300ms in SELECT query
+<a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a>  └─ Fix: Add index (planned for next sprint)
+<a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a>
+<a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a>Recommendation:
+<a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a>✓ PASS SLA for current load levels
+<a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a>✓ Ready for 2x traffic growth
+<a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a>✓ Recommend index optimization for 3x growth
+<a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a>
+<a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a>Next Steps:
+<a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a>1. Add database index
+<a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a>2. Re-test to confirm improvement
+<a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a>3. Plan capacity for Q1
+</code></pre></div>
+<p><strong>Lesson</strong>: Document findings for future reference and accountability.</p>
+<hr />
+<h3 id="best-practice-6-automate-tests-in-cicd">✅ Best Practice 6: Automate Tests in CI/CD</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>GitHub Actions example:
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>name: Load Tests
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>on:
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  schedule:
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>    - cron: &#39;0 2 * * *&#39;  # Nightly at 2am
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>jobs:
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>  load-test:
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>    runs-on: ubuntu-latest
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>    services:
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>      - docker (for staging environment)
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>    steps:
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>      - uses: actions/checkout@v2
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>      - name: Run Gatling baseline test
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>        run: mvn gatling:test -Dgatling.simulationClass=BaselineTest
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>      - name: Check assertions
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>        run: | # Fail if SLAs not met
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>          if ! grep -q &quot;Assertions passed&quot; target/gatling/*/index.html; then
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>            exit 1
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>          fi
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>      - name: Upload report
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>        uses: actions/upload-artifact@v2
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>        with:
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>          name: gatling-report
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>          path: target/gatling/*/
+<a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>      - name: Notify Slack
+<a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>        run: |
+<a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>          curl -X POST -d &#39;{&quot;text&quot;:&quot;Load test completed&quot;}&#39; $SLACK_WEBHOOK
+</code></pre></div>
+<p><strong>Benefits</strong>:
+- Tests run automatically
+- SLA violations caught immediately
+- Historical trends tracked
+- Prevent regression</p>
+<p><strong>Lesson</strong>: Automate tests; don't rely on manual execution.</p>
+<hr />
+<h3 id="best-practice-7-communicate-results">✅ Best Practice 7: Communicate Results</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Stakeholder Communication:
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>For Product/Business:
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>├─ &quot;System handles 10,000 concurrent users ✓&quot;
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>├─ &quot;p95 latency is 300ms (target: 300ms) ✓&quot;
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>└─ &quot;Safe to launch feature on schedule&quot;
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>For Ops/DevOps:
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>├─ &quot;Peak CPU: 75%, headroom: 25%&quot;
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>├─ &quot;Database connections: 45/50 (one more scaling needed)&quot;
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>└─ &quot;Infrastructure recommendation: Add 1 more instance&quot;
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>For Engineering:
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>├─ &quot;Database query is bottleneck (400ms out of 500ms latency)&quot;
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>├─ &quot;Adding index on users.email should improve by 60%&quot;
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>└─ &quot;Priority: Optimize slow query, then re-test&quot;
+<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>
+<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>For Executives:
+<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>├─ &quot;We can handle 3x current traffic&quot;
+<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>├─ &quot;No infrastructure scaling needed yet&quot;
+<a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>├─ &quot;Ready for holiday season traffic surge&quot;
+</code></pre></div>
+<p><strong>Lesson</strong>: Tailor message to audience; everyone speaks different language.</p>
+<hr />
+<h2 id="summary-dos-and-donts">Summary: Do's and Don'ts</h2>
+<h3 id="do">✅ DO:</h3>
+<ul>
+<li>Define clear SLAs before testing</li>
+<li>Test in realistic staging environment</li>
+<li>Use realistic think-time in scenarios</li>
+<li>Monitor both client (Gatling) and server (Datadog)</li>
+<li>Test multiple scenarios (load, ramp, soak, spike)</li>
+<li>Establish baseline before optimizing</li>
+<li>Document findings and communicate results</li>
+<li>Re-test after any changes</li>
+<li>Automate tests in CI/CD pipeline</li>
+<li>Use percentiles (p95, p99), not mean</li>
+</ul>
+<h3 id="dont">❌ DON'T:</h3>
+<ul>
+<li>Fire all requests instantly (no think-time)</li>
+<li>Load test from single overloaded machine</li>
+<li>Test against production</li>
+<li>Start test without warm-up</li>
+<li>Track only mean latency</li>
+<li>Test only happy path (ignore errors)</li>
+<li>Run one test and assume you're done</li>
+<li>Monitor only Gatling, ignore server metrics</li>
+<li>Deploy without load test validation</li>
+<li>Test at same load level each time (no learning)</li>
+</ul>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<p>→ <strong>Read next</strong>: <a href="../07-gatling-architecture/">Gatling Concepts: Architecture</a> - Understand Gatling framework</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="../../js/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

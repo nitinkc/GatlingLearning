@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Learning Team">
+        <link rel="canonical" href="https://nitinkc.github.io/GatlingLearning/theory/04-open-load-patterns/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>04. Open Load Patterns - Performance Testing with Gatling</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="https://unpkg.com/mermaid@10/dist/mermaid.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Performance Testing with Gatling</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">🏠 Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📚 Theory</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01-what-is-performance-testing/" class="dropdown-item">01. What is Performance Testing?</a>
+</li>
+                                    
+<li>
+    <a href="../02-key-metrics/" class="dropdown-item">02. Key Metrics</a>
+</li>
+                                    
+<li>
+    <a href="../03-load-testing-methodology/" class="dropdown-item">03. Load Testing Methodology</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">04. Open Load Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../05-performance-targets-slas/" class="dropdown-item">05. Performance Targets & SLAs</a>
+</li>
+                                    
+<li>
+    <a href="../06-common-pitfalls/" class="dropdown-item">06. Common Pitfalls</a>
+</li>
+                                    
+<li>
+    <a href="../07-gatling-architecture/" class="dropdown-item">07. Gatling Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../08-simulation-lifecycle/" class="dropdown-item">08. Simulation Lifecycle</a>
+</li>
+                                    
+<li>
+    <a href="../09-http-vs-kafka/" class="dropdown-item">09. HTTP vs Kafka</a>
+</li>
+                                    
+<li>
+    <a href="../10-scenarios-and-feeders/" class="dropdown-item">10. Scenarios & Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../11-checks-and-assertions/" class="dropdown-item">11. Checks & Assertions</a>
+</li>
+                                    
+<li>
+    <a href="../12-session-and-correlation/" class="dropdown-item">12. Session & Correlation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">🔬 Labs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../labs/22-lab-overview/" class="dropdown-item">Lab Overview</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/23-lab-basic-http/" class="dropdown-item">Lab 1 - Basic HTTP</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/24-lab-http-feeders/" class="dropdown-item">Lab 2 - HTTP Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/25-lab-checks-validation/" class="dropdown-item">Lab 3 - Checks & Validation</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/26-lab-load-profiles/" class="dropdown-item">Lab 4 - Load Profiles</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/27-lab-crud-operations/" class="dropdown-item">Lab 5 - CRUD Operations</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/28-lab-kafka-producer/" class="dropdown-item">Lab 6 - Kafka Producer</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/29-lab-kafka-feeders/" class="dropdown-item">Lab 7 - Kafka Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/30-lab-advanced-patterns/" class="dropdown-item">Lab 8 - Advanced Patterns</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📊 Monitoring & Advanced</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../13-datadog-integration/" class="dropdown-item">13. Datadog Integration</a>
+</li>
+                                    
+<li>
+    <a href="../14-traces-operations-spans/" class="dropdown-item">14. Traces & Spans</a>
+</li>
+                                    
+<li>
+    <a href="../15-dashboard-queries/" class="dropdown-item">15. Dashboard Queries</a>
+</li>
+                                    
+<li>
+    <a href="../16-load-test-analysis/" class="dropdown-item">16. Load Test Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../17-custom-feeders/" class="dropdown-item">17. Custom Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../18-advanced-patterns/" class="dropdown-item">18. Advanced Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../19-optimization-tips/" class="dropdown-item">19. Optimization Tips</a>
+</li>
+                                    
+<li>
+    <a href="../20-distributed-testing/" class="dropdown-item">20. Distributed Testing</a>
+</li>
+                                    
+<li>
+    <a href="../21-quick-reference/" class="dropdown-item">21. Quick Reference</a>
+</li>
+                                    
+<li>
+    <a href="../22-glossary/" class="dropdown-item">22. Glossary</a>
+</li>
+                                    
+<li>
+    <a href="../23-run-commands/" class="dropdown-item">23. Run Commands</a>
+</li>
+                                    
+<li>
+    <a href="../24-faq/" class="dropdown-item">24. FAQ</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning" class="nav-link">🔗 GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../03-load-testing-methodology/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../05-performance-targets-slas/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning/edit/master/docs/theory/04-open-load-patterns.md" class="nav-link">Edit on nitinkc/GatlingLearning
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#open-load-patterns" class="nav-link">Open Load Patterns</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#what-is-an-open-model" class="nav-link">What is an "Open Model"?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#open_constant_load" class="nav-link">OPEN_CONSTANT_LOAD</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#open_ramp_load" class="nav-link">OPEN_RAMP_LOAD</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#open_step_load" class="nav-link">OPEN_STEP_LOAD</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#open_spike_load" class="nav-link">OPEN_SPIKE_LOAD</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comparison-all-four-patterns" class="nav-link">Comparison: All Four Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-pattern-sequences" class="nav-link">Common Pattern Sequences</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#next-steps" class="nav-link">Next Steps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="open-load-patterns">Open Load Patterns</h1>
+<h2 id="what-is-an-open-model">What is an "Open Model"?</h2>
+<p>In Gatling, there are two injection models:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Closed Model</strong></td>
+<td style="text-align: left;">Fixed number of users cycle through scenario (e.g., "10 users, each repeat forever")</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Open Model</strong></td>
+<td style="text-align: left;">Unlimited concurrent users; new users arrive at a rate you specify</td>
+</tr>
+</tbody>
+</table>
+<p>Open models simulate <strong>unlimited traffic arriving at a constant/varying rate</strong>, which matches real-world scenarios better:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Closed (limited users):
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ 10 users always active
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├─ User 1 finishes request, immediately starts next
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├─ Total concurrency is bounded
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>└─ Example: 10 customer service reps handling tickets
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Open (unlimited users):
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├─ New users arrive at 100/sec (open-ended)
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>├─ Each user makes requests and leaves
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>├─ Total concurrency depends on request duration
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>└─ Example: E-commerce website during shopping
+</code></pre></div>
+<hr />
+<h2 id="open_constant_load">OPEN_CONSTANT_LOAD</h2>
+<p>Inject new virtual users at a <strong>constant rate</strong> throughout the test.</p>
+<h3 id="definition">Definition</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>constantUsersPerSec(rate).during(duration)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Example: constantUsersPerSec(100).during(300)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├─ Inject 100 new users every second
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>├─ For 300 seconds (5 minutes)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>└─ Total users injected: 100 × 300 = 30,000 user sessions
+</code></pre></div>
+<h3 id="execution-timeline">Execution Timeline</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Time (sec) | Users/sec injected | Active users | Actions
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>-----------|-------------------|--------------|----------
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>0-10       | 100               | Growing      | Users arriving, requests starting
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>10-20      | 100               | ~Peak        | Steady state, some users finishing
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>20-300     | 100               | ~Constant    | Stable, user turnover
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>300+       | 0                 | Declining    | No new users, existing finish
+</code></pre></div>
+<h3 id="real-world-scenarios">Real-World Scenarios</h3>
+<p><strong>Scenario 1: E-commerce baseline</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Situation: Normal weekday traffic to shop
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Load pattern: 100 new customers/second for 30 minutes
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>What this means:
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>├─ Customers arrive steadily
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>├─ ~100 browsing, adding to cart, checking out at once
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>├─ System should handle 100 concurrent requests consistently
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>└─ Latency should remain stable (not increase over time)
+</code></pre></div></p>
+<p><strong>Scenario 2: API rate limiting test</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Situation: Test API performance with guaranteed TPS
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Load pattern: 1000 RPS (1000 new requests/sec for 10 minutes)
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>What this means:
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>├─ Each second, 1000 requests must be processed
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>├─ API must sustain 1000 RPS without degrading
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>└─ Test verifies: Can we hit rate limit? Is it enforced?
+</code></pre></div></p>
+<h3 id="metrics-to-observe">Metrics to Observe</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>During test, track:
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>┌─ Latency (should be STABLE)
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>│   p95 latency at 0min: 150ms
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>│   p95 latency at 2min: 155ms  ✓ Stable
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>│   p95 latency at 4min: 160ms  ✓ Still stable
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>│   If p95 jumps to 500ms, something is saturating
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>│
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>├─ Throughput (should PLATEAU at RPS)
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>│   Should process ~100 RPS consistently
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>│   If it drops to 50 RPS, system is struggling
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>│
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>├─ Error rate (should be ZERO or constant)
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>│   &lt;0.1% errors throughout
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>│   Sudden spike indicates overload
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>│
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>├─ CPU/Memory (should be STABLE or LINEAR)
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>│   CPU: steady 40-60%  ✓ Good
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>│   Memory: flat line   ✓ Good (no leak)
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>│   If memory grows: potential leak detected
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>│
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>└─ Success rate (should be CONSISTENT)
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>   99.9% throughout
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>   If drops to 95%, something failed
+</code></pre></div>
+<h3 id="success-criteria">Success Criteria</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Test passes if:
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>✅ Latency stays stable (p95 doesn&#39;t increase &gt;20%)
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>✅ RPS achieved as planned (100 RPS = 30,000 total requests)
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>✅ Error rate stays &lt;0.1%
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>✅ No cascading failures
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>✅ System recovers after test ends
+</code></pre></div>
+<hr />
+<h2 id="open_ramp_load">OPEN_RAMP_LOAD</h2>
+<p>Gradually <strong>increase the rate</strong> of user arrivals from start to end load.</p>
+<h3 id="definition_1">Definition</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>rampUsersPerSec(startRate).to(endRate).during(duration)
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Example: rampUsersPerSec(10).to(100).during(300)
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>├─ Start: 10 new users/sec
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>├─ End: 100 new users/sec
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>├─ Ramp over: 300 seconds (5 minutes)
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>├─ Pattern: Linear increase (10 → 20 → 30 ... → 100)
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>└─ Total users: ~16,500 (average 55/sec × 300 sec)
+</code></pre></div>
+<h3 id="execution-timeline_1">Execution Timeline</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Time   | Inject Rate | Cumulative | Active Users | Latency | CPU
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>-------|-------------|------------|--------------|---------|-----
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>0s     | 10/sec      | 10         | 10           | 50ms    | 5%
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>30s    | 23/sec      | 680        | 30-40        | 60ms    | 10%
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>60s    | 36/sec      | 1,800      | 50-60        | 75ms    | 15%
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>120s   | 56/sec      | 5,200      | 80-100       | 120ms   | 25%
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>180s   | 76/sec      | 9,600      | 120-140      | 250ms   | 40%  ← Latency increasing
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>240s   | 90/sec      | 13,200     | 150-170      | 600ms   | 60%  ← Approaching limit
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>300s   | 100/sec     | 16,500     | 170-200      | 1500ms  | 75%  ← Near saturation
+</code></pre></div>
+<h3 id="real-world-scenarios_1">Real-World Scenarios</h3>
+<p><strong>Scenario 1: Event launch</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Situation: New feature launches to growing user base
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Load pattern: 10 users/sec → 100 users/sec over 30 minutes
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>What this means:
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>├─ Feature goes live, slowly picks up traffic
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>├─ As word spreads, more users discover it
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>├─ Test simulates: gradual ramp as users hear about new feature
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>└─ Objective: Ensure system can handle growth
+</code></pre></div></p>
+<p><strong>Scenario 2: Daily traffic pattern</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Situation: Rush hour peak (6pm-9pm)
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Load pattern: 100 users/sec → 1000 users/sec over 1 hour
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>What this means:
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>├─ 6pm: People get home, open app (100 users/sec)
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>├─ 7pm: More people logging in (500 users/sec)
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>├─ 8pm: Peak usage (1000 users/sec)
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>└─ Test verifies: Can system handle gradual peak growth?
+</code></pre></div></p>
+<h3 id="key-observation-finding-breaking-point">Key Observation: Finding Breaking Point</h3>
+<p>Ramp tests reveal where system degrades:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Ramp from 10 to 100 RPS over 10 minutes
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Results:
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>RPS → Latency
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>10  → 50ms  ✓ Excellent
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>20  → 60ms  ✓ Good
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>30  → 80ms  ✓ Good
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>40  → 120ms ✓ Acceptable
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>50  → 200ms ⚠ Getting slow
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>60  → 500ms ⚠ Concerning
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>70  → 1500ms ❌ Unacceptable
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>80  → 5000ms ❌ Breaking
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>Conclusion:
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>├─ System handles up to 50 RPS comfortably
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>├─ 60-70 RPS range is where it starts degrading
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>├─ &gt;70 RPS is unacceptable
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>└─ Safe operating range: 40-50 RPS (with headroom)
+</code></pre></div>
+<h3 id="metrics-to-observe_1">Metrics to Observe</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Track these over the ramp:
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>1. Latency curve
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>   ├─ Should be flat initially
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>   ├─ Should increase smoothly
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>   └─ Should NOT spike unpredictably
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>2. Error rate
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>   ├─ Should stay &lt;0.1% for most of ramp
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>   ├─ May increase near the end (nearing limit)
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>   └─ Should not jump suddenly
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>3. Resource utilization
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>   ├─ CPU should increase linearly with load
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>   ├─ Memory should be stable
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>   └─ Disk I/O should increase gradually
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>4. Identify the &quot;elbow&quot;
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>   └─ The point where latency starts increasing
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>      sharply (exponential vs linear)
+</code></pre></div>
+<h3 id="success-criteria_1">Success Criteria</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Test passes if:
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>✅ Latency increases smoothly (no sudden jumps)
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>✅ System reaches target load
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>✅ Error rate stays &lt;0.1% until near breaking point
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>✅ Obvious breaking point is identifiable
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>✅ System is stable (not cascading failures)
+</code></pre></div>
+<hr />
+<h2 id="open_step_load">OPEN_STEP_LOAD</h2>
+<p>Increase load in <strong>discrete steps</strong> (like stairs), holding each step for a duration.</p>
+<h3 id="definition_2">Definition</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>stepsTo pattern (Gatling v3.13+):
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Example:
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>  .injectOpen(
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>      constantUsersPerSec(10).during(300),   // Step 1: 10/sec for 5 min
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>      constantUsersPerSec(20).during(300),   // Step 2: 20/sec for 5 min
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>      constantUsersPerSec(50).during(300),   // Step 3: 50/sec for 5 min
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>      constantUsersPerSec(100).during(300)   // Step 4: 100/sec for 5 min
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>  )
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>Total duration: 20 minutes
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>Steps: 4 distinct levels
+</code></pre></div>
+<h3 id="execution-timeline_2">Execution Timeline</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Step 1 (10/sec, 5 min):    Baseline, system cold
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>   │                       ├─ Caches not populated
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>   │                       ├─ Connection pools warming up
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>   │                       └─ p95 latency: 50-100ms
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>   │
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>   ├─ 5 min wait (system settles)
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>   │
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>Step 2 (20/sec, 5 min):    2x baseline load
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>   │                       ├─ Caches warmed up
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>   │                       ├─ More connections used
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>   │                       └─ p95 latency: 80-120ms (increase expected)
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>   │
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>   ├─ 5 min wait (observe stability)
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>   │
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>Step 3 (50/sec, 5 min):    2.5x load
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>   │                       ├─ Cache hit rate peak
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>   │                       ├─ Connection pool busy
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>   │                       └─ p95 latency: 150-250ms
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>   │
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>   ├─ 5 min wait
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>   │
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>Step 4 (100/sec, 5 min):   10x baseline load
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>   │                       ├─ Approaching saturation
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>   │                       ├─ CPU climbing
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>   │                       └─ p95 latency: 500-1500ms
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>Timeline view:
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>Latency
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>    │     ╱─
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>  500│    ╱  ├─────
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>    │   ╱    │
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>  250│  ╱     ├────
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a>    │ ╱      │
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a>  100├────┐   ├───
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a>    │     │   │
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a>   50├─────┐  │
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>    │           time →
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a>    0 5 10 15 20 (min)
+</code></pre></div>
+<h3 id="real-world-scenarios_2">Real-World Scenarios</h3>
+<p><strong>Scenario 1: Database migration testing</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Situation: Planning to migrate from MySQL to PostgreSQL
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Load pattern: Step from 10 → 20 → 50 → 100 RPS at 5-min intervals
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>What this means:
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>├─ Step 1: Let new DB warm up (caches, indices)
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>├─ Step 2: Observe: Did latency increase? Is replication lag OK?
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>├─ Step 3: Push harder, see if indexing works
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>└─ Step 4: Near-breaking-point test
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>Result: &quot;We&#39;re safe at 80 RPS; migration is OK&quot;
+</code></pre></div></p>
+<p><strong>Scenario 2: Cache effectiveness analysis</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Situation: Want to verify cache is actually helping
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Load pattern: Step test from 10 → 20 → 50 → 100 RPS
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>What to watch:
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>├─ Step 1: Cache cold, latency high (no cached data)
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>├─ Step 2: Cache warming, latency should DROP
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>├─ Step 3: Cache warm, latency flat (good hit rate)
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>└─ Step 4: Cache still working, latency increases due to load
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>Result: Can see exactly when cache impacts performance
+</code></pre></div></p>
+<p><strong>Scenario 3: Connection pool behavior</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Situation: Want to understand connection pool utilization
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>Load pattern: Step test, monitoring pool size at each step
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>Observations:
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>├─ Step 1 (10/sec): 5/50 connections used (pool has room)
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>├─ Step 2 (20/sec): 12/50 connections used
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>├─ Step 3 (50/sec): 35/50 connections (getting tight)
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>├─ Step 4 (100/sec): 50/50 connections + 20 waiting in queue
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>Result: &quot;We need to increase pool size or optimize query times&quot;
+</code></pre></div></p>
+<h3 id="metrics-to-observe_2">Metrics to Observe</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>At EACH step, record:
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Step level | Active users | p95 latency | p99 latency | CPU | Connections
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>-----------|-------------|-------------|-------------|-----|-------------
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>   10/sec  |    50       |    80ms     |   120ms     | 15% |  10/50
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>   20/sec  |   100       |   100ms     |   150ms     | 25% |  20/50
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>   50/sec  |   250       |   200ms     |   400ms     | 50% |  40/50
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>  100/sec  |   500       |   800ms     |  2000ms     | 80% |  50/50 + Q
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>Patterns to look for:
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>1. Linear scaling (good)
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>   └─ Latency increases proportionally with load
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>2. Super-linear scaling (bad)
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>   └─ Latency increases more than load increases
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>3. Sudden step up (concerning)
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>   └─ Latency jumps at specific load level (pool exhaustion, etc.)
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>4. Saturation (end of test)
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>   └─ Last step shows unacceptable latency
+</code></pre></div>
+<h3 id="success-criteria_2">Success Criteria</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Test passes if:
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>✅ Each step is stable (latency flat during the step)
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>✅ Between steps, system recovers quickly
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>✅ Latency increase is gradual (not sudden spikes)
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>✅ Resources utilized efficiently (no waste)
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>✅ Identify safe operating point clearly
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>✅ Identify breaking point clearly
+</code></pre></div>
+<hr />
+<h2 id="open_spike_load">OPEN_SPIKE_LOAD</h2>
+<p><strong>Sudden jump</strong> to high load, then drop back down.</p>
+<h3 id="definition_3">Definition</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Example:
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>  .injectOpen(
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>      constantUsersPerSec(100).during(300),      // Normal: 100/sec for 5 min
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>      rampUsersPerSec(100).to(5000).during(30),  // Spike: Jump to 5000/sec in 30sec
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>      constantUsersPerSec(5000).during(60),      // Hold spike: 5000/sec for 1 min
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>      rampUsersPerSec(5000).to(100).during(30),  // Drop: Back to 100/sec in 30sec
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>      constantUsersPerSec(100).during(300)       // Recovery: Monitor for 5 min
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>  )
+</code></pre></div>
+<h3 id="execution-timeline_3">Execution Timeline</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Phase 1: Normal
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>├─ 100 RPS for 5 minutes
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>├─ p95 latency: 150ms
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>├─ System stable, CPU 30%
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>└─ Cache warmed up
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>   │ &quot;News goes viral on Twitter&quot;
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>   ↓
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>Phase 2: Spike (incoming 5000/sec)
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>├─ Latency jumps: 150ms → 3000ms
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>├─ Queue forms: requests backlog
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>├─ CPU: 30% → 95%
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>├─ Circuit breaker might trip
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>└─ Load balancer might drop connections
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>Phase 3: During spike (holding at 5000/sec)
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>├─ System either:
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>│  A) Auto-scales (good): New instances start
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>│  B) Degrades (bad): Latency remains at 3000ms
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>│  C) Crashes (worst): Service becomes unavailable
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>└─ Error rate climbs if not handling well
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>Phase 4: Recovery phase (back to 100/sec)
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>├─ Queue drains (high latency for a while)
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>├─ Auto-scaled instances scale back down
+<a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>├─ p95 latency: Should return to 150ms
+<a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>└─ CPU: Should return to 30%
+<a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>
+<a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>Phase 5: Post-recovery monitoring
+<a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>├─ Is system stable?
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>├─ Any data corruption?
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>├─ Any lingering issues?
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>└─ Memory stable (no leak from scaling)?
+</code></pre></div>
+<h3 id="real-world-scenarios_3">Real-World Scenarios</h3>
+<p><strong>Scenario 1: Viral moment</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Situation: Your product trends on social media
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Normal load: 100 users/sec
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>Spike: 5000 users/sec (50x increase!)
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>Recovery: Back to 100 users/sec
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>What might happen:
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>├─ Spike hits: Requests queue, latency explodes
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>├─ Auto-scaler detects high CPU/latency
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>├─ New instances spin up (takes 30-60 seconds in AWS)
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>├─ System gradually handles more load
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>├─ Customers experience 2-5 second waits initially
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>├─ After 2-3 minutes: New instances online
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>├─ Load distributes: Latency improves to 500ms
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>├─ Spike passes: Traffic drops back to normal
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>├─ System scales down: Instances terminate after 5 min idle
+<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>└─ Back to baseline: Everything normal
+<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>
+<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>Test objective: Verify system doesn&#39;t CRASH, degradation is acceptable
+</code></pre></div></p>
+<p><strong>Scenario 2: Flash sale</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Situation: Black Friday 20% off promotion goes live
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Normal load: 50 users/sec
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Spike: 2000 users/sec (40x increase)
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>Recovery: Back to 50 users/sec over 30 minutes
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>What we&#39;re testing:
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>├─ Inventory updates don&#39;t get corrupted
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>├─ Payment processing doesn&#39;t fail
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>├─ Database doesn&#39;t deadlock
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>└─ System recovers cleanly
+</code></pre></div></p>
+<h3 id="metrics-to-observe_3">Metrics to Observe</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>During spike test:
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>Before spike:
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>├─ p95 latency: 150ms
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>├─ Error rate: 0.05%
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>├─ CPU: 30%
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>└─ RPS: 100
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>During spike onset (first 30 seconds):
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>├─ p95 latency: 3000ms (acceptable, but high)
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>├─ p99 latency: 10000ms (some requests timing out)
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>├─ Error rate: 0.5-2% (some overloaded errors)
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>├─ CPU: 95-100%
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>├─ RPS still ~100 (queue building, not processing 5000 yet)
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>└─ Circuit breaker: May be open, rejecting requests
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>After recovery:
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>├─ p95 latency: Should return to 150ms
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>├─ Error rate: Should return to &lt;0.1%
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>├─ CPU: Should return to 30%
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>└─ RPS: Should return to 100
+</code></pre></div>
+<h3 id="success-criteria_3">Success Criteria</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Test passes if:
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>✅ System doesn&#39;t crash during spike
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>✅ Error rate stays &lt;5% during spike
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>✅ Circuit breaker works (graceful degradation)
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>✅ System recovers to baseline within 5-10 minutes
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>✅ No data corruption during spike
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>✅ No lingering issues after recovery
+</code></pre></div>
+<hr />
+<h2 id="comparison-all-four-patterns">Comparison: All Four Patterns</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Pattern</th>
+<th style="text-align: left;">Use Case</th>
+<th style="text-align: left;">Duration</th>
+<th style="text-align: left;">Objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Constant</strong></td>
+<td style="text-align: left;">Baseline testing, API rate limits</td>
+<td style="text-align: left;">5-30 min</td>
+<td style="text-align: left;">"Do we meet SLAs?"</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ramp</strong></td>
+<td style="text-align: left;">Find breaking point, capacity planning</td>
+<td style="text-align: left;">10-30 min</td>
+<td style="text-align: left;">"Where does it break?"</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Step</strong></td>
+<td style="text-align: left;">Threshold analysis, cache behavior</td>
+<td style="text-align: left;">20-30 min</td>
+<td style="text-align: left;">"What's safe max load?"</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Spike</strong></td>
+<td style="text-align: left;">Recovery, resilience, auto-scaling</td>
+<td style="text-align: left;">15-20 min</td>
+<td style="text-align: left;">"Can we handle surprises?"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-pattern-sequences">Common Pattern Sequences</h2>
+<h3 id="for-initial-testing-full-test-2-hours">For Initial Testing (Full Test: ~2 hours)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>1. Smoke test: 1 user, 1 iteration
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>   └─ Verify code compiles, no errors (5 min)
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>2. Constant load test: 100 RPS for 15 minutes
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>   └─ Establish baseline (20 min)
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>3. Wait 10 minutes
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>   └─ Let system cool down (10 min)
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>4. Ramp test: 10 → 500 RPS over 30 minutes
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>   └─ Find breaking point (40 min)
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>5. Wait 10 minutes
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>   └─ Cool down (10 min)
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a>
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>6. Step test: 50 → 100 → 200 → 400 RPS (5 min each)
+<a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>   └─ Understand thresholds (30 min)
+<a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a>
+<a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a>Total: ~2 hours of testing
+</code></pre></div>
+<h3 id="for-soak-testing-overnight">For Soak Testing (Overnight)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>1. Constant: 100 RPS for 12 hours
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>   └─ Monitor for memory leaks, degradation
+</code></pre></div>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<p>→ <strong>Read next</strong>: <a href="../05-performance-targets-slas/">Performance Targets &amp; SLAs</a> - Industry benchmarks</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="../../js/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Learning Team">
+        <link rel="canonical" href="https://nitinkc.github.io/GatlingLearning/theory/15-dashboard-queries/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>15. Dashboard Queries - Performance Testing with Gatling</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="https://unpkg.com/mermaid@10/dist/mermaid.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Performance Testing with Gatling</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">🏠 Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📚 Theory</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01-what-is-performance-testing/" class="dropdown-item">01. What is Performance Testing?</a>
+</li>
+                                    
+<li>
+    <a href="../02-key-metrics/" class="dropdown-item">02. Key Metrics</a>
+</li>
+                                    
+<li>
+    <a href="../03-load-testing-methodology/" class="dropdown-item">03. Load Testing Methodology</a>
+</li>
+                                    
+<li>
+    <a href="../04-open-load-patterns/" class="dropdown-item">04. Open Load Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../05-performance-targets-slas/" class="dropdown-item">05. Performance Targets & SLAs</a>
+</li>
+                                    
+<li>
+    <a href="../06-common-pitfalls/" class="dropdown-item">06. Common Pitfalls</a>
+</li>
+                                    
+<li>
+    <a href="../07-gatling-architecture/" class="dropdown-item">07. Gatling Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../08-simulation-lifecycle/" class="dropdown-item">08. Simulation Lifecycle</a>
+</li>
+                                    
+<li>
+    <a href="../09-http-vs-kafka/" class="dropdown-item">09. HTTP vs Kafka</a>
+</li>
+                                    
+<li>
+    <a href="../10-scenarios-and-feeders/" class="dropdown-item">10. Scenarios & Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../11-checks-and-assertions/" class="dropdown-item">11. Checks & Assertions</a>
+</li>
+                                    
+<li>
+    <a href="../12-session-and-correlation/" class="dropdown-item">12. Session & Correlation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">🔬 Labs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../labs/22-lab-overview/" class="dropdown-item">Lab Overview</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/23-lab-basic-http/" class="dropdown-item">Lab 1 - Basic HTTP</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/24-lab-http-feeders/" class="dropdown-item">Lab 2 - HTTP Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/25-lab-checks-validation/" class="dropdown-item">Lab 3 - Checks & Validation</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/26-lab-load-profiles/" class="dropdown-item">Lab 4 - Load Profiles</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/27-lab-crud-operations/" class="dropdown-item">Lab 5 - CRUD Operations</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/28-lab-kafka-producer/" class="dropdown-item">Lab 6 - Kafka Producer</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/29-lab-kafka-feeders/" class="dropdown-item">Lab 7 - Kafka Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/30-lab-advanced-patterns/" class="dropdown-item">Lab 8 - Advanced Patterns</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📊 Monitoring & Advanced</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../13-datadog-integration/" class="dropdown-item">13. Datadog Integration</a>
+</li>
+                                    
+<li>
+    <a href="../14-traces-operations-spans/" class="dropdown-item">14. Traces & Spans</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">15. Dashboard Queries</a>
+</li>
+                                    
+<li>
+    <a href="../16-load-test-analysis/" class="dropdown-item">16. Load Test Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../17-custom-feeders/" class="dropdown-item">17. Custom Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../18-advanced-patterns/" class="dropdown-item">18. Advanced Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../19-optimization-tips/" class="dropdown-item">19. Optimization Tips</a>
+</li>
+                                    
+<li>
+    <a href="../20-distributed-testing/" class="dropdown-item">20. Distributed Testing</a>
+</li>
+                                    
+<li>
+    <a href="../21-quick-reference/" class="dropdown-item">21. Quick Reference</a>
+</li>
+                                    
+<li>
+    <a href="../22-glossary/" class="dropdown-item">22. Glossary</a>
+</li>
+                                    
+<li>
+    <a href="../23-run-commands/" class="dropdown-item">23. Run Commands</a>
+</li>
+                                    
+<li>
+    <a href="../24-faq/" class="dropdown-item">24. FAQ</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning" class="nav-link">🔗 GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../14-traces-operations-spans/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../16-load-test-analysis/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning/edit/master/docs/theory/15-dashboard-queries.md" class="nav-link">Edit on nitinkc/GatlingLearning
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#dashboard-queries" class="nav-link">Dashboard Queries</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#query-basics" class="nav-link">Query Basics</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-dashboard-queries-for-load-tests" class="nav-link">Common Dashboard Queries for Load Tests</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#filtering-techniques" class="nav-link">Filtering Techniques</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comparison-queries" class="nav-link">Comparison Queries</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#building-custom-dashboards" class="nav-link">Building Custom Dashboards</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#troubleshooting-queries" class="nav-link">Troubleshooting Queries</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#key-takeaways" class="nav-link">Key Takeaways</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#navigation" class="nav-link">Navigation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="dashboard-queries">Dashboard Queries</h1>
+<h2 id="overview">Overview</h2>
+<p>Datadog Query Language (DQL) lets you write custom queries to:</p>
+<ul>
+<li><strong>Filter</strong> metrics by tags</li>
+<li><strong>Aggregate</strong> data over time</li>
+<li><strong>Compare</strong> baseline vs load test</li>
+<li><strong>Alert</strong> on anomalies</li>
+<li><strong>Build</strong> custom dashboards</li>
+</ul>
+<hr />
+<h2 id="query-basics">Query Basics</h2>
+<h3 id="basic-syntax">Basic Syntax</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>metric_name{tag1:value1, tag2:value2} | aggregation_function
+</code></pre></div>
+<h3 id="example-queries">Example Queries</h3>
+<h4 id="1-average-response-time-by-endpoint">1. Average Response Time by Endpoint</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>avg:trace.http.request.duration{env:staging}
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  by {resource_name}
+</code></pre></div>
+<p>Result:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GET /users: 250ms
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>GET /users/:id: 350ms
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>POST /users: 400ms
+</code></pre></div></p>
+<h4 id="2-error-rate-over-time">2. Error Rate Over Time</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>100 * (
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  sum:trace.http.errors{env:staging} 
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  / 
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  sum:trace.http.requests{env:staging}
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>)
+</code></pre></div>
+<p>Result:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>t=0min: 0.05%
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>t=5min: 0.08%
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>t=10min: 0.12% ← increasing
+</code></pre></div></p>
+<h4 id="3-p95-latency-by-service">3. P95 Latency by Service</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>p95:trace.http.request.duration{env:staging}
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  by {service}
+</code></pre></div>
+<p>Result:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>api-service: 450ms
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>db-service: 800ms
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>cache-service: 50ms
+</code></pre></div></p>
+<h4 id="4-database-query-latency-distribution">4. Database Query Latency Distribution</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>avg:trace.sql.query.duration{env:staging}
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  by {database.statement}
+</code></pre></div>
+<p>Result:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>SELECT * FROM users: 25ms
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>SELECT * FROM orders: 150ms
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>UPDATE inventory SET: 200ms ← SLOW
+</code></pre></div></p>
+<h4 id="5-request-count-during-load-test">5. Request Count During Load Test</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sum:trace.requests{test:Lab1}
+</code></pre></div>
+<p>Result shows total requests produced by test</p>
+<hr />
+<h2 id="common-dashboard-queries-for-load-tests">Common Dashboard Queries for Load Tests</h2>
+<h3 id="system-level-metrics">System-Level Metrics</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a># CPU Usage
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>avg:system.cpu.user{env:staging}
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a># Memory Usage
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>avg:system.mem.pct_usable{env:staging}
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a># Disk I/O
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>avg:system.io.reads{env:staging}
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>avg:system.io.writes{env:staging}
+</code></pre></div>
+<h3 id="application-level-metrics">Application-Level Metrics</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a># Request Rate
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sum:trace.requests{env:staging}
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a># Error Rate
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>sum:trace.errors{env:staging} / sum:trace.requests{env:staging}
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a># Response Time
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>p50:trace.http.request.duration{env:staging}
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>p95:trace.http.request.duration{env:staging}
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>p99:trace.http.request.duration{env:staging}
+</code></pre></div>
+<h3 id="database-metrics">Database Metrics</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a># Query Rate
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sum:trace.sql.queries{env:staging}
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a># Slow Queries
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>sum:trace.sql.queries{env:staging, duration:&gt;1000ms}
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a># Connection Pool Usage
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>avg:db.pool.usage{env:staging}
+</code></pre></div>
+<hr />
+<h2 id="filtering-techniques">Filtering Techniques</h2>
+<h3 id="by-environment">By Environment</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>metric_name{env:staging}
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>metric_name{env:production}
+</code></pre></div>
+<h3 id="by-test-name">By Test Name</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>metric_name{test:Lab1_BasicHttp}
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>metric_name{test:Lab4_LoadProfile}
+</code></pre></div>
+<h3 id="by-service">By Service</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>metric_name{service:api}
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>metric_name{service:database}
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>metric_name{service:cache}
+</code></pre></div>
+<h3 id="by-endpoint">By Endpoint</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>metric_name{resource_name:GET /users}
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>metric_name{resource_name:POST /orders}
+</code></pre></div>
+<h3 id="combined-filters">Combined Filters</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>metric_name{env:staging, test:Lab1, service:api}
+</code></pre></div>
+<hr />
+<h2 id="comparison-queries">Comparison Queries</h2>
+<h3 id="compare-baseline-vs-load-test">Compare Baseline vs Load Test</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a># During load test
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>avg:trace.http.request.duration{test:Lab1}  # = 250ms
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a># Baseline (no load)
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>avg:trace.http.request.duration{env:staging, test:baseline}  # = 150ms
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a># Difference = 100ms (67% increase)
+</code></pre></div>
+<h3 id="detect-regressions">Detect Regressions</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># Query that returns &gt;1000ms = regression
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>p95:trace.http.request.duration{service:api} &gt; 1000
+</code></pre></div>
+<hr />
+<h2 id="building-custom-dashboards">Building Custom Dashboards</h2>
+<h3 id="step-1-create-dashboard">Step 1: Create Dashboard</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Datadog → Dashboards → New Dashboard
+</code></pre></div>
+<h3 id="step-2-add-widgets">Step 2: Add Widgets</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Widget Type: Timeseries
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>Metric: p95:trace.http.request.duration{env:staging}
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>Title: &quot;API P95 Latency During Load Test&quot;
+</code></pre></div>
+<h3 id="step-3-add-multiple-queries">Step 3: Add Multiple Queries</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Widget: &quot;System Health&quot;
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>├─ CPU: avg:system.cpu.user{env:staging}
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>├─ Memory: avg:system.mem.pct_usable{env:staging}
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>├─ Disk I/O: sum:system.io{env:staging}
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>└─ Network: avg:system.net.bytes{env:staging}
+</code></pre></div>
+<h3 id="step-4-tag-dashboard">Step 4: Tag Dashboard</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Tags: &quot;load-testing&quot;, &quot;Lab1&quot;, &quot;staging&quot;
+</code></pre></div>
+<hr />
+<h2 id="troubleshooting-queries">Troubleshooting Queries</h2>
+<h3 id="query-returns-no-data">Query Returns No Data</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>❌ metric_name{env:staging}
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>✅ Check if metric exists: avg:metric_name
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>✅ Check tags: metric_name{env:*}
+</code></pre></div>
+<h3 id="query-returns-wrong-data">Query Returns Wrong Data</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>❌ Wrong filter: metric_name{test:Lab1}
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>✅ Verify exact tag value: metric_name{test_name:Lab1_BasicHttp}
+</code></pre></div>
+<h3 id="query-syntax-error">Query Syntax Error</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>❌ metric_name{tag1:value1, tag2:value2}  (missing space)
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>✅ metric_name{tag1:value1,tag2:value2}
+</code></pre></div>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Queries filter and aggregate metrics</strong></li>
+<li><strong>Tags enable precise filtering</strong></li>
+<li><strong>Baselines enable comparison</strong></li>
+<li><strong>Dashboards consolidate multiple queries</strong></li>
+<li><strong>Regular expressions enable pattern matching</strong></li>
+</ol>
+<hr />
+<h2 id="navigation">Navigation</h2>
+<p><strong>← Previous</strong>: <a href="../14-traces-operations-spans/">Traces, Operations &amp; Spans</a><br />
+<strong>→ Next</strong>: <a href="../16-load-test-analysis/">Load Test Analysis</a><br />
+<strong>↑ Up</strong>: <a href="../../">Documentation Index</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="../../js/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

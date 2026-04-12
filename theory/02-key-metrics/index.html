@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Learning Team">
+        <link rel="canonical" href="https://nitinkc.github.io/GatlingLearning/theory/02-key-metrics/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>02. Key Metrics - Performance Testing with Gatling</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="https://unpkg.com/mermaid@10/dist/mermaid.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Performance Testing with Gatling</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">🏠 Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📚 Theory</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../01-what-is-performance-testing/" class="dropdown-item">01. What is Performance Testing?</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">02. Key Metrics</a>
+</li>
+                                    
+<li>
+    <a href="../03-load-testing-methodology/" class="dropdown-item">03. Load Testing Methodology</a>
+</li>
+                                    
+<li>
+    <a href="../04-open-load-patterns/" class="dropdown-item">04. Open Load Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../05-performance-targets-slas/" class="dropdown-item">05. Performance Targets & SLAs</a>
+</li>
+                                    
+<li>
+    <a href="../06-common-pitfalls/" class="dropdown-item">06. Common Pitfalls</a>
+</li>
+                                    
+<li>
+    <a href="../07-gatling-architecture/" class="dropdown-item">07. Gatling Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../08-simulation-lifecycle/" class="dropdown-item">08. Simulation Lifecycle</a>
+</li>
+                                    
+<li>
+    <a href="../09-http-vs-kafka/" class="dropdown-item">09. HTTP vs Kafka</a>
+</li>
+                                    
+<li>
+    <a href="../10-scenarios-and-feeders/" class="dropdown-item">10. Scenarios & Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../11-checks-and-assertions/" class="dropdown-item">11. Checks & Assertions</a>
+</li>
+                                    
+<li>
+    <a href="../12-session-and-correlation/" class="dropdown-item">12. Session & Correlation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">🔬 Labs</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../labs/22-lab-overview/" class="dropdown-item">Lab Overview</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/23-lab-basic-http/" class="dropdown-item">Lab 1 - Basic HTTP</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/24-lab-http-feeders/" class="dropdown-item">Lab 2 - HTTP Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/25-lab-checks-validation/" class="dropdown-item">Lab 3 - Checks & Validation</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/26-lab-load-profiles/" class="dropdown-item">Lab 4 - Load Profiles</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/27-lab-crud-operations/" class="dropdown-item">Lab 5 - CRUD Operations</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/28-lab-kafka-producer/" class="dropdown-item">Lab 6 - Kafka Producer</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/29-lab-kafka-feeders/" class="dropdown-item">Lab 7 - Kafka Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../../labs/30-lab-advanced-patterns/" class="dropdown-item">Lab 8 - Advanced Patterns</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">📊 Monitoring & Advanced</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../13-datadog-integration/" class="dropdown-item">13. Datadog Integration</a>
+</li>
+                                    
+<li>
+    <a href="../14-traces-operations-spans/" class="dropdown-item">14. Traces & Spans</a>
+</li>
+                                    
+<li>
+    <a href="../15-dashboard-queries/" class="dropdown-item">15. Dashboard Queries</a>
+</li>
+                                    
+<li>
+    <a href="../16-load-test-analysis/" class="dropdown-item">16. Load Test Analysis</a>
+</li>
+                                    
+<li>
+    <a href="../17-custom-feeders/" class="dropdown-item">17. Custom Feeders</a>
+</li>
+                                    
+<li>
+    <a href="../18-advanced-patterns/" class="dropdown-item">18. Advanced Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../19-optimization-tips/" class="dropdown-item">19. Optimization Tips</a>
+</li>
+                                    
+<li>
+    <a href="../20-distributed-testing/" class="dropdown-item">20. Distributed Testing</a>
+</li>
+                                    
+<li>
+    <a href="../21-quick-reference/" class="dropdown-item">21. Quick Reference</a>
+</li>
+                                    
+<li>
+    <a href="../22-glossary/" class="dropdown-item">22. Glossary</a>
+</li>
+                                    
+<li>
+    <a href="../23-run-commands/" class="dropdown-item">23. Run Commands</a>
+</li>
+                                    
+<li>
+    <a href="../24-faq/" class="dropdown-item">24. FAQ</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning" class="nav-link">🔗 GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../01-what-is-performance-testing/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../03-load-testing-methodology/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/nitinkc/GatlingLearning/edit/master/docs/theory/02-key-metrics.md" class="nav-link">Edit on nitinkc/GatlingLearning
+                                    </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#key-metrics-measurements" class="nav-link">Key Metrics &amp; Measurements</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#latency-metrics-response-time" class="nav-link">Latency Metrics (Response Time)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#throughput-metrics" class="nav-link">Throughput Metrics</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#resource-metrics" class="nav-link">Resource Metrics</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#how-metrics-work-together" class="nav-link">How Metrics Work Together</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metrics-by-load-test-type" class="nav-link">Metrics by Load Test Type</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#target-metrics-by-service-type" class="nav-link">Target Metrics by Service Type</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#tools-for-collecting-metrics" class="nav-link">Tools for Collecting Metrics</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#next-steps" class="nav-link">Next Steps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="key-metrics-measurements">Key Metrics &amp; Measurements</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Performance metrics tell you <strong>how well your system is actually performing</strong>. Without metrics, you're flying blind.</p>
+<blockquote>
+<p><strong>"You can't improve what you don't measure."</strong> — Peter Drucker</p>
+</blockquote>
+<p>This section covers the metrics you'll track during load tests and what they mean.</p>
+<hr />
+<h2 id="latency-metrics-response-time">Latency Metrics (Response Time)</h2>
+<p><strong>Latency</strong> is the time from when a request is sent until a response is received.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─ Client sends request (GET /api/users)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│  
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├─ Network transit: 5ms
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├─ Server processes: 100ms
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├─ Network return: 5ms
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>└─ Response received
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>   Total latency = 110ms
+</code></pre></div>
+<h3 id="the-problem-with-mean-latency">The Problem with Mean Latency</h3>
+<p>Many teams track <strong>mean (average) latency</strong>, but it's misleading:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Request 1:  50ms
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Request 2:  60ms
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Request 3:  55ms
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Request 4:  70ms
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Request 5:  5000ms ← One slow request (cache miss, GC pause)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Request 6:  65ms
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Request 7:  60ms
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Request 8:  55ms
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Request 9:  50ms
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Request 10: 70ms
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Mean latency = 5535ms ÷ 10 = 553.5ms ← Hiding outliers!
+</code></pre></div>
+<p>Only 1 request was slow, but the mean suggests widespread problems.</p>
+<h3 id="percentile-latencies-correct-approach">Percentile Latencies (Correct Approach)</h3>
+<p><strong>Percentiles</strong> tell you the distribution of response times:</p>
+<h4 id="p50-median">P50 (Median)</h4>
+<ul>
+<li><strong>Definition</strong>: 50% of requests complete faster than this time</li>
+<li><strong>Example</strong>: p50 = 100ms means half your requests are faster than 100ms</li>
+<li><strong>Use case</strong>: Baseline performance; less useful alone</li>
+</ul>
+<h4 id="p95-95th-percentile">P95 (95th Percentile)</h4>
+<ul>
+<li><strong>Definition</strong>: 95% of requests complete within this time; 5% are slower</li>
+<li><strong>Example</strong>: p95 = 300ms means:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>✓ 9,500 out of 10,000 requests complete in ≤300ms
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>✗ 500 out of 10,000 requests take &gt;300ms
+</code></pre></div></li>
+<li><strong>Industry guideline</strong>:</li>
+<li>Web apps: target &lt;500ms</li>
+<li>APIs: target &lt;200ms</li>
+<li>Real-time systems: target &lt;50ms</li>
+<li><strong>User impact</strong>: Most users have good experience; 5% might notice slowness</li>
+</ul>
+<h4 id="p99-99th-percentile">P99 (99th Percentile)</h4>
+<ul>
+<li><strong>Definition</strong>: 99% of requests complete within this time; 1% are slower</li>
+<li><strong>Example</strong>: p99 = 800ms means:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>✓ 9,900 out of 10,000 requests complete in ≤800ms
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>✗ 100 out of 10,000 requests take &gt;800ms
+</code></pre></div></li>
+<li><strong>Industry guideline</strong>:</li>
+<li>Web apps: target &lt;1000ms</li>
+<li>APIs: target &lt;500ms</li>
+<li><strong>User impact</strong>: Occasional users experience significant slowness</li>
+</ul>
+<h4 id="p999-999th-percentile">P99.9 (99.9th Percentile)</h4>
+<ul>
+<li><strong>Definition</strong>: 99.9% of requests complete within this time; 0.1% are slower</li>
+<li><strong>Example</strong>: p99.9 = 3000ms means:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>✓ 9,990 out of 10,000 requests complete in ≤3000ms
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>✗ 10 out of 10,000 requests take &gt;3000ms
+</code></pre></div></li>
+<li><strong>Use case</strong>: SLA compliance, extreme outliers</li>
+<li><strong>User impact</strong>: Rare users experience very slow responses</li>
+</ul>
+<h3 id="latency-example-from-real-test">Latency Example from Real Test</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Test: 10,000 requests at constant load
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>┌─ Percentile Distribution ─────────────────────────
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>│
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>│    Count
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>│      │     ╱╲
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>│ 1000 │    ╱  ╲
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>│      │   ╱    ╲___
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>│  500 │  ╱          ╲
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>│      │ ╱             ╲
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>│      │╱_________________╲___
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>│      └────────────────────────────→ Latency (ms)
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>│      0    100   200   300   500   5000
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>│
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>├─ Key metrics:
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>│  ├─ Min:  45ms
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>│  ├─ p50:  100ms  (half faster than 100ms)
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>│  ├─ p95:  300ms  (95% faster than 300ms)
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>│  ├─ p99:  1000ms (99% faster than 1000ms)
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>│  ├─ p99.9: 3000ms (99.9% faster than 3000ms)
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>│  └─ Max:  5000ms
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>│
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>└─ 5 requests took &gt;1000ms (cache misses, GC pauses)
+</code></pre></div>
+<h3 id="why-percentiles-matter">Why Percentiles Matter</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Scenario: Your p95 = 1000ms (too high!)
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Diagnosis options:
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>❌ Option 1: &quot;Let&#39;s use mean to decide&quot;
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>   Mean = 150ms (looks fine, misleading!)
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>✓ Option 2: &quot;Check p95, p99&quot;
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>   p95 = 1000ms (5% of users suffering)
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>   p99 = 5000ms (1% experience 5-second waits)
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>   Root cause: Slow database query on specific conditions
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>   Fix: Add index, optimize query, increase cache TTL
+</code></pre></div>
+<hr />
+<h2 id="throughput-metrics">Throughput Metrics</h2>
+<p><strong>Throughput</strong> measures how much work the system completes.</p>
+<h3 id="rps-requests-per-second">RPS (Requests Per Second)</h3>
+<ul>
+<li><strong>Definition</strong>: How many HTTP requests the system processes per second</li>
+<li><strong>Example</strong>: 1,000 RPS = system handles 1,000 requests/sec</li>
+<li><strong>Measurement</strong>: Count successful requests in a 1-second window</li>
+<li><strong>During load test</strong>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Second 1: 1,000 requests processed ✓ RPS = 1,000
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Second 2: 950 requests processed ⚠ RPS = 950 (degrading under load)
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Second 3: 500 requests processed ❌ RPS = 500 (system saturating)
+</code></pre></div></li>
+</ul>
+<h3 id="tps-transactions-per-second">TPS (Transactions Per Second)</h3>
+<ul>
+<li><strong>Definition</strong>: Number of complete business transactions per second</li>
+<li><strong>Differs from RPS</strong>: One transaction might involve multiple requests</li>
+<li><strong>Example</strong>: Checkout flow = 5 HTTP requests
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>if RPS = 1,000:
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  ├─ One checkout = 5 requests
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  └─ TPS = 1,000 ÷ 5 = 200 transactions/sec
+</code></pre></div></li>
+<li><strong>When to use</strong>: Business metrics, SLA reporting</li>
+</ul>
+<h3 id="success-rate-error-rate">Success Rate &amp; Error Rate</h3>
+<p><strong>Success Rate</strong>: Percentage of requests that succeeded (HTTP 2xx, 3xx)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Example from load test:
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>├─ Total requests: 10,000
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>├─ Successful: 9,950
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>├─ Failed: 50
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>├─ Success rate: 99.5%
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>└─ Error rate: 0.5%
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>SLA: Must be &gt;99% success
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>Result: ✓ PASS (99.5% &gt; 99%)
+</code></pre></div>
+<p><strong>Error Rate</strong>: Percentage that failed (4xx, 5xx, timeouts)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Common failure modes:
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├─ 4xx errors (4%): Client errors (bad requests)
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│  └─ Often: Invalid data, auth failures
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>├─ 5xx errors (0.5%): Server errors
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│  └─ Often: Database down, OOM, unhandled exceptions
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>└─ Timeouts (0.1%): Request never completed
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>   └─ Often: Slow database, external service, queue buildup
+</code></pre></div>
+<hr />
+<h2 id="resource-metrics">Resource Metrics</h2>
+<p>While running a load test, monitor your <strong>system resources</strong> on the server being tested. These are usually captured with Datadog.</p>
+<h3 id="cpu-utilization">CPU Utilization</h3>
+<ul>
+<li><strong>Definition</strong>: Percentage of CPU time being used</li>
+<li><strong>During load test</strong>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>0-20%  : System idle, plenty of headroom
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>20-50% : Normal load, healthy
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>50-80% : Getting busy, approaching limits
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>80-95% : Very busy, risk of slow responses
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>95-100%: CPU-bound bottleneck, system saturating
+</code></pre></div></li>
+<li><strong>What causes high CPU?</strong></li>
+<li>Complex calculations (encryption, compression)</li>
+<li>Inefficient algorithms</li>
+<li>Thread contention (locks, synchronized blocks)</li>
+<li>Garbage collection pauses (Java, Go, Python)</li>
+</ul>
+<h3 id="memory-usage">Memory Usage</h3>
+<ul>
+<li><strong>Definition</strong>: RAM consumed by the application</li>
+<li><strong>Watch for</strong>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>100 requests:  200MB ✓ Normal
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>1,000 requests: 250MB ✓ Still reasonable
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>10,000 requests: 500MB ✓ Growing as expected
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>100,000 requests: 8GB ❌ Memory leak!
+</code></pre></div></li>
+<li><strong>Common memory issues</strong>:</li>
+<li>Memory leaks (objects not released)</li>
+<li>Growing caches without eviction</li>
+<li>Connection pool leaks (connections not returned)</li>
+<li>Message queues filling up</li>
+</ul>
+<h3 id="disk-io">Disk I/O</h3>
+<ul>
+<li><strong>Definition</strong>: Read/write operations to disk</li>
+<li><strong>During load test</strong>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Reads: Database queries hitting disk (not in page cache)
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Writes: Log files, database changes, temporary data
+</code></pre></div></li>
+<li><strong>Watch for</strong>:</li>
+<li>High disk I/O → indicates database queries not cached</li>
+<li>Disk saturation → indicates storage bottleneck</li>
+<li>Example: SSD writes per second should be &lt;10,000 (AWS limit varies)</li>
+</ul>
+<h3 id="network-io">Network I/O</h3>
+<ul>
+<li><strong>Definition</strong>: Bytes sent and received over network</li>
+<li><strong>During load test</strong>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Inbound: Requests from load tester
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Outbound: Responses to client, external API calls
+</code></pre></div></li>
+<li><strong>Common issue</strong>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>RPS = 10,000 requests/sec
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Avg response = 10KB
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Outbound = 100,000KB/sec = 100MB/sec
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>Network bandwidth = 1Gbps = 125MB/sec
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>Headroom = 20% (tight!)
+</code></pre></div></li>
+</ul>
+<h3 id="connection-pools">Connection Pools</h3>
+<ul>
+<li><strong>Definition</strong>: Active database/service connections</li>
+<li><strong>During load test</strong>:
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Pool size: 50 connections (configured max)
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>20 load level: 10 connections in use ✓
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>100 load level: 45 connections in use ⚠
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>200 load level: 50 connections in use + 30 waiting ❌ (queue!)
+</code></pre></div></li>
+<li><strong>Problem</strong>: Connection pool exhaustion
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>└─ Connections slow/blocked
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>   └─ Requests queue up
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>      └─ More requests arrive
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>         └─ Queue grows
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>            └─ Timeouts, cascading failures
+</code></pre></div></li>
+</ul>
+<hr />
+<h2 id="how-metrics-work-together">How Metrics Work Together</h2>
+<h3 id="example-1-system-performing-well">Example 1: System Performing Well</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Load test: 5,000 RPS for 10 minutes
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>Metrics during test:
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>├─ p95 latency: 200ms ✓ (target: &lt;300ms)
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>├─ p99 latency: 400ms ✓ (target: &lt;1000ms)
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>├─ Success rate: 99.8% ✓ (target: &gt;99%)
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>├─ CPU: 65% ✓ (healthy, room to grow)
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>├─ Memory: 1.2GB ✓ (stable, not growing)
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>├─ Database connections: 30/50 ✓ (headroom)
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>└─ Disk I/O: Low ✓ (queries cached)
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>Conclusion: ✅ SYSTEM HEALTHY
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>Action: Can handle 2-3x more load safely
+</code></pre></div>
+<h3 id="example-2-database-bottleneck">Example 2: Database Bottleneck</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Load test: Increasing from 1,000 to 10,000 RPS
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Observations:
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>├─ 1,000 RPS: p95 latency = 50ms, CPU 20%
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>├─ 2,000 RPS: p95 latency = 75ms, CPU 25%
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>├─ 5,000 RPS: p95 latency = 300ms, CPU 40%, disk I/O ⬆ ⬆ ⬆
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>├─ 10,000 RPS: p95 latency = 2000ms, CPU 50%, disk maxed out
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>Root cause: Disk I/O ceiling
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>│
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>└─ Database queries hitting disk (not in cache)
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>   └─ Each query = disk I/O wait
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>      └─ As load increases, more queries queue up
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>         └─ Latency explodes non-linearly
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>Fix options:
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>├─ Add caching layer (Redis)
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>├─ Optimize slow queries (add indexes)
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>├─ Increase database connection pool
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>├─ Scale database (read replicas)
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>└─ Re-test after fix
+</code></pre></div>
+<h3 id="example-3-gc-pause-impact">Example 3: GC Pause Impact</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Java application under load
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>JVM GC (Garbage Collection) timeline:
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>├─ Time 0-45s: Normal operations
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>│  └─ p95 latency: 100ms, steady
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>│
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>├─ Time 45s: Full GC pause (0.5 seconds)
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>│  └─ All requests block
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>│     └─ p95 latency spikes to 2000ms+
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>│     └─ Requests timeout, 0.1% errors
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>│
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>├─ Time 45.5s: GC completes
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>│  └─ Requests resume
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>│
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>├─ Time 45.5-50s: High p99 tail
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>│  └─ Requests queued during GC still processing
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>│     └─ Takes 2-3 seconds to drain queue
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>│
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>└─ Time 50+s: Back to normal
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>Observation: Every 45 seconds, p95 spikes to 2000ms
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>Fix options:
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>├─ Tune JVM heap size (-Xmx, -Xms)
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>├─ Change GC algorithm (G1GC, ZGC for low latency)
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>├─ Add more memory to reduce GC frequency
+<a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>└─ Re-test after tuning
+</code></pre></div>
+<hr />
+<h2 id="metrics-by-load-test-type">Metrics by Load Test Type</h2>
+<h3 id="load-test-baseline">Load Test (Baseline)</h3>
+<p>Monitor these:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>├─ p50, p95, p99 latencies ← Should be stable
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>├─ RPS / TPS ← Should be consistent
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>├─ Success rate ← Should be &gt;99%
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>├─ CPU/Memory ← Should be steady
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>└─ Resource utilization ← Should not be maxing out
+</code></pre></div></p>
+<h3 id="stress-test-breaking-point">Stress Test (Breaking Point)</h3>
+<p>Monitor:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>├─ p95, p99, p99.9 latencies ← Will increase
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>├─ Error rate ← Should increase as you approach limit
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>├─ RPS plateau ← Where does it max out?
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>├─ CPU/Memory peaks ← What triggers saturation?
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>└─ Recovery time ← How long to stabilize?
+</code></pre></div></p>
+<h3 id="soak-test-long-term-stability">Soak Test (Long-term Stability)</h3>
+<p>Monitor over 8-24 hours:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>├─ Memory trend ← Growing (leak) or stable?
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>├─ p95 latency trend ← Increasing (degradation) or stable?
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>├─ Connection count ← Growing (leak) or stable?
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>├─ GC pause frequency ← Increasing (more pressure)?
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>└─ Error rate trend ← Any anomalies over time?
+</code></pre></div></p>
+<h3 id="spike-test-recovery">Spike Test (Recovery)</h3>
+<p>Monitor during spike and recovery:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>├─ Before spike: p95 = 50ms
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>├─ During spike: p95 = 1000ms (accept 20x increase)
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>├─ After spike: p95 → 50ms (should recover within 2-3 minutes)
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>└─ System availability ← Did it stay up?
+</code></pre></div></p>
+<hr />
+<h2 id="target-metrics-by-service-type">Target Metrics by Service Type</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Service</th>
+<th style="text-align: left;">p95 Target</th>
+<th style="text-align: left;">p99 Target</th>
+<th style="text-align: left;">Success Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Web App</strong></td>
+<td style="text-align: left;">&lt;300ms</td>
+<td style="text-align: left;">&lt;1000ms</td>
+<td style="text-align: left;">&gt;99.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mobile API</strong></td>
+<td style="text-align: left;">&lt;200ms</td>
+<td style="text-align: left;">&lt;500ms</td>
+<td style="text-align: left;">&gt;99.5%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Internal API</strong></td>
+<td style="text-align: left;">&lt;100ms</td>
+<td style="text-align: left;">&lt;300ms</td>
+<td style="text-align: left;">&gt;99.9%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Real-time</strong></td>
+<td style="text-align: left;">&lt;50ms</td>
+<td style="text-align: left;">&lt;100ms</td>
+<td style="text-align: left;">&gt;99.9%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Batch/Event</strong></td>
+<td style="text-align: left;">&lt;5000ms</td>
+<td style="text-align: left;">&lt;30000ms</td>
+<td style="text-align: left;">&gt;99%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kafka Stream</strong></td>
+<td style="text-align: left;">&lt;100ms (produce)</td>
+<td style="text-align: left;">&lt;500ms</td>
+<td style="text-align: left;">&gt;99.9%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tools-for-collecting-metrics">Tools for Collecting Metrics</h2>
+<h3 id="gatling-built-in">Gatling Built-in</h3>
+<p>Metrics are automatically collected:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>├─ Response times (min, max, percentiles)
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>├─ Success/error rates
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>├─ Request counts by endpoint
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>└─ HTML report with charts
+</code></pre></div></p>
+<h3 id="datadog-apm-recommended-for-production">Datadog APM (Recommended for Production)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>├─ Real-time metrics
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>├─ Trace-level detail (which database query was slow?)
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>├─ Custom metrics and annotations
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>├─ Alert thresholds
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>└─ Dashboard queries
+</code></pre></div>
+<h3 id="application-monitoring">Application Monitoring</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>├─ New Relic
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>├─ Dynatrace
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>├─ Splunk
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>└─ Your own metrics (StatsD, Prometheus)
+</code></pre></div>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<p>→ <strong>Read next</strong>: <a href="../03-load-testing-methodology/">Load Testing Methodology</a> - How to plan and execute tests</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script src="../../js/mermaid-init.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

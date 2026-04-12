@@ -14,3 +14,5 @@ target/
 
 # Testcontainers local properties
 .testcontainers.properties
+.venv/
+site/

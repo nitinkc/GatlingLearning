@@ -271,3 +271,15 @@ This project mirrors the architecture of the production `dps-load` project but s
 - [Gatling injection models](https://gatling.io/docs/gatling/reference/current/core/injection/)
 - [Testcontainers Kafka](https://java.testcontainers.org/modules/kafka/)
 - [Apache Kafka Producer API](https://kafka.apache.org/documentation/#producerapi)
+
+
+```shell
+python3 -m venv .venv                                                                  
+source .venv/bin/activate
+
+python -m pip install --upgrade pip
+source .venv/bin/activate && pip install -r requirements.txt
+
+
+mkdocs serve -a 127.0.0.1:8000 
+```

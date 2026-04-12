@@ -1,0 +1,87 @@
+site_name: Performance Testing with Gatling
+site_description: Comprehensive guide to performance testing methodology and Gatling load testing framework
+site_author: Learning Team
+site_url: https://nitinkc.github.io/GatlingLearning/
+
+repo_name: nitinkc/GatlingLearning
+repo_url: https://github.com/nitinkc/GatlingLearning
+
+theme:
+  name: mkdocs
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - def_list
+  - toc:
+      toc_depth: 3
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js
+  - js/mermaid-init.js
+
+extra_css:
+  - https://unpkg.com/mermaid@10/dist/mermaid.css
+
+nav:
+  - 🏠 Home: index.md
+  
+  - 📚 Theory:
+    - 01. What is Performance Testing?: theory/01-what-is-performance-testing.md
+    - 02. Key Metrics: theory/02-key-metrics.md
+    - 03. Load Testing Methodology: theory/03-load-testing-methodology.md
+    - 04. Open Load Patterns: theory/04-open-load-patterns.md
+    - 05. Performance Targets & SLAs: theory/05-performance-targets-slas.md
+    - 06. Common Pitfalls: theory/06-common-pitfalls.md
+    - 07. Gatling Architecture: theory/07-gatling-architecture.md
+    - 08. Simulation Lifecycle: theory/08-simulation-lifecycle.md
+    - 09. HTTP vs Kafka: theory/09-http-vs-kafka.md
+    - 10. Scenarios & Feeders: theory/10-scenarios-and-feeders.md
+    - 11. Checks & Assertions: theory/11-checks-and-assertions.md
+    - 12. Session & Correlation: theory/12-session-and-correlation.md
+
+  - 🔬 Labs:
+    - Lab Overview: labs/22-lab-overview.md
+    - Lab 1 - Basic HTTP: labs/23-lab-basic-http.md
+    - Lab 2 - HTTP Feeders: labs/24-lab-http-feeders.md
+    - Lab 3 - Checks & Validation: labs/25-lab-checks-validation.md
+    - Lab 4 - Load Profiles: labs/26-lab-load-profiles.md
+    - Lab 5 - CRUD Operations: labs/27-lab-crud-operations.md
+    - Lab 6 - Kafka Producer: labs/28-lab-kafka-producer.md
+    - Lab 7 - Kafka Feeders: labs/29-lab-kafka-feeders.md
+    - Lab 8 - Advanced Patterns: labs/30-lab-advanced-patterns.md
+
+  - 📊 Monitoring & Advanced:
+    - 13. Datadog Integration: theory/13-datadog-integration.md
+    - 14. Traces & Spans: theory/14-traces-operations-spans.md
+    - 15. Dashboard Queries: theory/15-dashboard-queries.md
+    - 16. Load Test Analysis: theory/16-load-test-analysis.md
+    - 17. Custom Feeders: theory/17-custom-feeders.md
+    - 18. Advanced Patterns: theory/18-advanced-patterns.md
+    - 19. Optimization Tips: theory/19-optimization-tips.md
+    - 20. Distributed Testing: theory/20-distributed-testing.md
+    - 21. Quick Reference: theory/21-quick-reference.md
+    - 22. Glossary: theory/22-glossary.md
+    - 23. Run Commands: theory/23-run-commands.md
+    - 24. FAQ: theory/24-faq.md
+
+  - 🔗 GitHub: https://github.com/nitinkc/GatlingLearning
+

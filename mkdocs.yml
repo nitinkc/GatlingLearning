@@ -3,9 +3,6 @@ site_description: Comprehensive guide to performance testing methodology and Gat
 site_author: Learning Team
 site_url: https://nitinkc.github.io/GatlingLearning/
 
-repo_name: nitinkc/GatlingLearning
-repo_url: https://github.com/nitinkc/GatlingLearning
-
 docs_dir: docs
 site_dir: site
 

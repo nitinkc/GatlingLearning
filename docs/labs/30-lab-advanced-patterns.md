@@ -243,7 +243,7 @@ mvn gatling:test -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim
 
 ## Navigation
 
-**← Previous**: [Lab 7: Kafka with Feeders](07-lab-kafka-feeders.md)  
-**→ Next**: [Monitoring & Analysis](01-datadog-integration.md)  
-**↑ Up**: [Lab Overview](00-lab-overview.md)
+**← Previous**: [Lab 7: Kafka with Feeders](29-lab-kafka-feeders.md)  
+**→ Next**: [Monitoring & Analysis](../theory/13-datadog-integration.md)  
+**↑ Up**: [Lab Overview](22-lab-overview.md)
 

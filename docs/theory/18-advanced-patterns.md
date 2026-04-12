@@ -320,7 +320,7 @@ ScenarioBuilder ecommerceJourney = scenario("E-Commerce")
 
 ## Navigation
 
-**← Previous**: [Custom Feeders](01-custom-feeders.md)  
-**→ Next**: [Optimization Tips](03-optimization-tips.md)  
+**← Previous**: [Custom Feeders](17-custom-feeders.md)  
+**→ Next**: [Optimization Tips](19-optimization-tips.md)  
 **↑ Up**: [Documentation Index](../index.md)
 

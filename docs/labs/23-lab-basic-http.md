@@ -306,5 +306,5 @@ Then re-run. Question: How do different endpoints compare in latency?
 
 ## Next Steps
 
-→ **Move to Lab 2**: [Lab 2: HTTP with Feeders](02-lab-http-feeders.md) - Inject varying data for realistic testing
+→ **Move to Lab 2**: [Lab 2: HTTP with Feeders](24-lab-http-feeders.md) - Inject varying data for realistic testing
 

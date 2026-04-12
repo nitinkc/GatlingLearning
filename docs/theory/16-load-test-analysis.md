@@ -302,7 +302,7 @@ After each load test, document:
 
 ## Navigation
 
-**← Previous**: [Dashboard Queries](03-dashboard-queries.md)  
-**→ Next**: [Advanced Topics](01-custom-feeders.md)  
+**← Previous**: [Dashboard Queries](15-dashboard-queries.md)  
+**→ Next**: [Advanced Topics](17-custom-feeders.md)  
 **↑ Up**: [Documentation Index](../index.md)
 

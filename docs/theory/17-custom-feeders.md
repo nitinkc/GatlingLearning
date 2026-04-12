@@ -269,7 +269,7 @@ Iterator<Map<String, Object>> inefficientFeeder =
 
 ## Navigation
 
-**← Previous**: [Load Test Analysis](04-load-test-analysis.md)  
-**→ Next**: [Advanced Patterns](02-advanced-patterns.md)  
+**← Previous**: [Load Test Analysis](16-load-test-analysis.md)  
+**→ Next**: [Advanced Patterns](18-advanced-patterns.md)  
 **↑ Up**: [Documentation Index](../index.md)
 

@@ -318,7 +318,7 @@ Use when: Load >50,000 users, team size >5, budget available
 
 ## Navigation
 
-**← Previous**: [Optimization Tips](03-optimization-tips.md)  
+**← Previous**: [Optimization Tips](19-optimization-tips.md)  
 **→ Next**: [Quick Reference]](01-quick-reference.md)  
 **↑ Up**: [Documentation Index](../index.md)
 

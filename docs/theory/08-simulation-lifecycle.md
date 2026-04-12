@@ -90,12 +90,12 @@ Total: 6 seconds per user, per scenario iteration
 
 ## See Also
 
-- [Gatling Architecture](01-gatling-architecture.md) - Core components
-- [Session & Correlation](06-session-and-correlation.md) - Per-user state
+- [Gatling Architecture](07-gatling-architecture.md) - Core components
+- [Session & Correlation](12-session-and-correlation.md) - Per-user state
 
 ---
 
 ## Next Steps
 
-→ **Read next**: [HTTP vs Kafka](03-http-vs-kafka.md)
+→ **Read next**: [HTTP vs Kafka](09-http-vs-kafka.md)
 

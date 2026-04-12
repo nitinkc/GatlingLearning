@@ -169,7 +169,7 @@ mvn gatling:test -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim
 
 ## Navigation
 
-**← Previous**: [Lab 4: Load Profiles](04-lab-load-profiles.md)  
-**→ Next**: [Lab 6: Kafka Producer](06-lab-kafka-producer.md)  
-**↑ Up**: [Lab Overview](00-lab-overview.md)
+**← Previous**: [Lab 4: Load Profiles](26-lab-load-profiles.md)  
+**→ Next**: [Lab 6: Kafka Producer](28-lab-kafka-producer.md)  
+**↑ Up**: [Lab Overview](22-lab-overview.md)
 

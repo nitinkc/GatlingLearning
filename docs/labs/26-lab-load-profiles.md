@@ -120,7 +120,7 @@ mvn gatling:test -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim
 
 ## Navigation
 
-**← Previous**: [Lab 3: Checks & Validation](03-lab-checks-validation.md)  
-**→ Next**: [Lab 5: CRUD Operations](05-lab-crud-operations.md)  
-**↑ Up**: [Lab Overview](00-lab-overview.md)
+**← Previous**: [Lab 3: Checks & Validation](25-lab-checks-validation.md)  
+**→ Next**: [Lab 5: CRUD Operations](27-lab-crud-operations.md)  
+**↑ Up**: [Lab Overview](22-lab-overview.md)
 

@@ -123,59 +123,59 @@ python3 -m mkdocs serve
 ### **Foundations** (1-2 hours)
 Understand the "why" and "what" of performance testing before writing code.
 
-- [What is Performance Testing?](01-foundations/01-what-is-performance-testing.md) — Types, why it matters
-- [Key Metrics & Measurements](01-foundations/02-key-metrics.md) — Latency, throughput, resources
-- [Load Testing Methodology](01-foundations/03-load-testing-methodology.md) — Best practices, workflow
-- [Open Load Patterns](01-foundations/04-open-load-patterns.md) — Constant, ramp, step, spike
-- [Performance Targets & SLAs](01-foundations/05-performance-targets-slas.md) — Industry benchmarks
-- [Common Pitfalls](01-foundations/06-common-pitfalls.md) — What to avoid
+- [What is Performance Testing?](theory/01-what-is-performance-testing.md) — Types, why it matters
+- [Key Metrics & Measurements](theory/02-key-metrics.md) — Latency, throughput, resources
+- [Load Testing Methodology](theory/03-load-testing-methodology.md) — Best practices, workflow
+- [Open Load Patterns](theory/04-open-load-patterns.md) — Constant, ramp, step, spike
+- [Performance Targets & SLAs](theory/05-performance-targets-slas.md) — Industry benchmarks
+- [Common Pitfalls](theory/06-common-pitfalls.md) — What to avoid
 
 ### **Gatling Concepts** (1.5-2 hours)
 Learn how Gatling works under the hood.
 
-- [Gatling Architecture](02-gatling-concepts/01-gatling-architecture.md) — Core components
-- [Simulation Lifecycle](02-gatling-concepts/02-simulation-lifecycle.md) — Execution flow
-- [HTTP vs Kafka Patterns](02-gatling-concepts/03-http-vs-kafka.md) — When to use each
-- [Scenarios & Feeders](02-gatling-concepts/04-scenarios-and-feeders.md) — Data injection
-- [Checks & Assertions](02-gatling-concepts/05-checks-and-assertions.md) — Validation
-- [Session & Correlation](02-gatling-concepts/06-session-and-correlation.md) — State management
+- [Gatling Architecture](theory/07-gatling-architecture.md) — Core components
+- [Simulation Lifecycle](theory/08-simulation-lifecycle.md) — Execution flow
+- [HTTP vs Kafka Patterns](theory/09-http-vs-kafka.md) — When to use each
+- [Scenarios & Feeders](theory/10-scenarios-and-feeders.md) — Data injection
+- [Checks & Assertions](theory/11-checks-and-assertions.md) — Validation
+- [Session & Correlation](theory/12-session-and-correlation.md) — State management
 
 ### **Practical Labs** (3-4 hours)
 Build real skills with 8 hands-on labs, progressing from basics to advanced patterns.
 
-- [Lab Overview](03-labs/00-lab-overview.md) — How to work through labs
-- [Lab 1: Basic HTTP](03-labs/01-lab-basic-http.md) — GET requests, pauses, constant load
-- [Lab 2: HTTP Feeders](03-labs/02-lab-http-feeders.md) — CSV/JSON data injection
-- [Lab 3: Checks & Validation](03-labs/03-lab-checks-validation.md) — Response validation, correlation
-- [Lab 4: Load Profiles](03-labs/04-lab-load-profiles.md) — Smoke, ramp, step, spike tests
-- [Lab 5: CRUD Operations](03-labs/05-lab-crud-operations.md) — PUT, PATCH, DELETE
-- [Lab 6: Kafka Producer](03-labs/06-lab-kafka-producer.md) — Event streaming basics
-- [Lab 7: Kafka with Feeders](03-labs/07-lab-kafka-feeders.md) — Data-driven Kafka tests
-- [Lab 8: Advanced Patterns](03-labs/08-lab-advanced-patterns.md) — Async, throttling, complex scenarios
+- [Lab Overview](labs/22-lab-overview.md) — How to work through labs
+- [Lab 1: Basic HTTP](labs/23-lab-basic-http.md) — GET requests, pauses, constant load
+- [Lab 2: HTTP Feeders](labs/24-lab-http-feeders.md) — CSV/JSON data injection
+- [Lab 3: Checks & Validation](labs/25-lab-checks-validation.md) — Response validation, correlation
+- [Lab 4: Load Profiles](labs/26-lab-load-profiles.md) — Smoke, ramp, step, spike tests
+- [Lab 5: CRUD Operations](labs/27-lab-crud-operations.md) — PUT, PATCH, DELETE
+- [Lab 6: Kafka Producer](labs/28-lab-kafka-producer.md) — Event streaming basics
+- [Lab 7: Kafka with Feeders](labs/29-lab-kafka-feeders.md) — Data-driven Kafka tests
+- [Lab 8: Advanced Patterns](labs/30-lab-advanced-patterns.md) — Async, throttling, complex scenarios
 
 ### **Monitoring & Analysis** (1-2 hours)
 Understand how to monitor and analyze load tests with Datadog.
 
-- [Datadog Integration](04-monitoring/01-datadog-integration.md) — APM setup, tags
-- [Traces, Operations & Spans](04-monitoring/02-traces-operations-spans.md) — Understanding traces
-- [Dashboard Queries](04-monitoring/03-dashboard-queries.md) — Writing queries
-- [Load Test Analysis](04-monitoring/04-load-test-analysis.md) — Reading results
+- [Datadog Integration](theory/13-datadog-integration.md) — APM setup, tags
+- [Traces, Operations & Spans](theory/14-traces-operations-spans.md) — Understanding traces
+- [Dashboard Queries](theory/15-dashboard-queries.md) — Writing queries
+- [Load Test Analysis](theory/16-load-test-analysis.md) — Reading results
 
 ### **Advanced Topics** (Optional)
 For production deployments and complex scenarios.
 
-- [Custom Feeders](05-advanced/01-custom-feeders.md) — Building data generators
-- [Advanced Patterns](05-advanced/02-advanced-patterns.md) — Complex scenarios
-- [Optimization Tips](05-advanced/03-optimization-tips.md) — JVM tuning, performance
-- [Distributed Testing](05-advanced/04-distributed-testing.md) — Multi-machine setups
+- [Custom Feeders](theory/17-custom-feeders.md) — Building data generators
+- [Advanced Patterns](theory/18-advanced-patterns.md) — Complex scenarios
+- [Optimization Tips](theory/19-optimization-tips.md) — JVM tuning, performance
+- [Distributed Testing](theory/20-distributed-testing.md) — Multi-machine setups
 
 ### **Reference** (Lookup)
 Quick reference guides and troubleshooting.
 
-- [Quick Reference](06-reference/01-quick-reference.md) — Cheat sheet, common patterns
-- [Glossary](06-reference/02-glossary.md) — Terminology explained
-- [Run Commands](06-reference/03-run-commands.md) — All Maven commands
-- [FAQ & Troubleshooting](06-reference/04-faq.md) — Solving common issues
+- [Quick Reference](theory/21-quick-reference.md) — Cheat sheet, common patterns
+- [Glossary](theory/22-glossary.md) — Terminology explained
+- [Run Commands](theory/23-run-commands.md) — All Maven commands
+- [FAQ & Troubleshooting](theory/24-faq.md) — Solving common issues
 
 ---
 
@@ -195,10 +195,10 @@ Quick reference guides and troubleshooting.
 - **Session 4** (1h): Monitoring, Lab 8, Q&A
 
 ### For Teams
-- Share the [Quick Reference](06-reference/01-quick-reference.md) as a team cheat sheet
-- Use [Run Commands](06-reference/03-run-commands.md) for CI/CD setup
-- Reference [Glossary](06-reference/02-glossary.md) for terminology alignment
-- Build custom labs based on [Advanced Patterns](05-advanced/02-advanced-patterns.md)
+- Share the [Quick Reference](theory/21-quick-reference.md) as a team cheat sheet
+- Use [Run Commands](theory/23-run-commands.md) for CI/CD setup
+- Reference [Glossary](theory/22-glossary.md) for terminology alignment
+- Build custom labs based on [Advanced Patterns](theory/18-advanced-patterns.md)
 
 ---
 
@@ -272,8 +272,8 @@ By completing this learning path, you'll be able to:
 
 This documentation is a living guide. As you work through labs:
 
-- **Found an issue?** Note it in [FAQ & Troubleshooting](06-reference/04-faq.md)
-- **Have a tip?** Suggest additions to [Quick Reference](06-reference/01-quick-reference.md)
+- **Found an issue?** Note it in [FAQ & Troubleshooting](theory/24-faq.md)
+- **Have a tip?** Suggest additions to [Quick Reference](theory/21-quick-reference.md)
 - **Want to improve?** Every section has a "Further Reading" link
 
 ---
@@ -298,12 +298,11 @@ This documentation is a living guide. As you work through labs:
 
 ## 🎯 Next Steps
 
-1. **Start here**: [What is Performance Testing?](01-foundations/01-what-is-performance-testing.md)
-2. **Then read**: [Key Metrics & Measurements](01-foundations/02-key-metrics.md)
-3. **Build first skill**: [Lab 1: Basic HTTP](03-labs/01-lab-basic-http.md)
+1. **Start here**: [What is Performance Testing?](theory/01-what-is-performance-testing.md)
+2. **Then read**: [Key Metrics & Measurements](theory/02-key-metrics.md)
+3. **Build first skill**: [Lab 1: Basic HTTP](labs/23-lab-basic-http.md)
 4. **Progress systematically** through all labs
 
 ---
 
 **Happy learning! 🚀**
-

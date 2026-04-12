@@ -585,5 +585,5 @@ For Executives:
 
 ## Next Steps
 
-→ **Read next**: [Gatling Concepts: Architecture](../02-gatling-concepts/01-gatling-architecture.md) - Understand Gatling framework
+→ **Read next**: [Gatling Concepts: Architecture](07-gatling-architecture.md) - Understand Gatling framework
 

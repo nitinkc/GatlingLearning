@@ -107,6 +107,6 @@ mvn gatling:test -Dgatling.simulationClass=io.learn.gatling.simulations.http.Sim
 
 ## Navigation
 
-**← Previous**: [Lab 2: HTTP Feeders](15-lab-http-feeders.md)  
-**→ Next**: [Lab 4: Load Profiles](17-lab-load-profiles.md)  
-**↑ Up**: [Lab Overview](13-lab-overview.md)
+**← Previous**: [Lab 2: HTTP Feeders](24-lab-http-feeders.md)  
+**→ Next**: [Lab 4: Load Profiles](26-lab-load-profiles.md)  
+**↑ Up**: [Lab Overview](22-lab-overview.md)

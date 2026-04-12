@@ -135,5 +135,5 @@ mvn gatling:test -X
 
 ## Next Steps
 
-→ **Glossary**: [Glossary](02-glossary.md) - Terminology explained
+→ **Glossary**: [Glossary](22-glossary.md) - Terminology explained
 

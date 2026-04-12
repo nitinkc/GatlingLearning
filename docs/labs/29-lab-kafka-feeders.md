@@ -163,7 +163,7 @@ mvn gatling:test -Dgatling.simulationClass=io.learn.gatling.simulations.kafka.Si
 
 ## Navigation
 
-**← Previous**: [Lab 6: Kafka Producer](06-lab-kafka-producer.md)  
-**→ Next**: [Lab 8: Advanced Patterns](08-lab-advanced-patterns.md)  
-**↑ Up**: [Lab Overview](00-lab-overview.md)
+**← Previous**: [Lab 6: Kafka Producer](28-lab-kafka-producer.md)  
+**→ Next**: [Lab 8: Advanced Patterns](30-lab-advanced-patterns.md)  
+**↑ Up**: [Lab Overview](22-lab-overview.md)
 

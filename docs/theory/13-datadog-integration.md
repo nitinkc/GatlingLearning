@@ -179,7 +179,7 @@ System.setProperty("dd.tags", "env:staging,test_name:Lab1_BasicHttp");
 
 ## Navigation
 
-**← Previous**: [Lab 8: Advanced Patterns](08-lab-advanced-patterns.md)  
-**→ Next**: [Traces, Operations & Spans](02-traces-operations-spans.md)  
+**← Previous**: [Lab 8: Advanced Patterns](../labs/30-lab-advanced-patterns.md)  
+**→ Next**: [Traces, Operations & Spans](14-traces-operations-spans.md)  
 **↑ Up**: [Documentation Index](../index.md)
 

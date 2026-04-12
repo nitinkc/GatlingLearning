@@ -322,5 +322,5 @@ ROI: (100,000 - 500) / 500 = 199x (per month!)
 
 ## Next Steps
 
-→ **Read next**: [Distributed Testing](04-distributed-testing.md) - Load test across multiple machines
+→ **Read next**: [Distributed Testing](20-distributed-testing.md) - Load test across multiple machines
 

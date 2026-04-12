@@ -409,5 +409,5 @@ Why? Gatling uses non-blocking I/O:
 
 ## Next Steps
 
-→ **Read next**: [Simulation Lifecycle](02-simulation-lifecycle.md) - Detailed execution flow
+→ **Read next**: [Simulation Lifecycle](08-simulation-lifecycle.md) - Detailed execution flow
 

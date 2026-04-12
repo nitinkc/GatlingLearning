@@ -88,5 +88,5 @@ scenario("E-commerce Checkout")
 
 ## Next Steps
 
-→ **Continue to Labs**: [Lab Overview](../03-labs/00-lab-overview.md)
+→ **Continue to Labs**: [Lab Overview](../labs/22-lab-overview.md)
 

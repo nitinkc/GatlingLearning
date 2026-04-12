@@ -43,5 +43,5 @@ setUp(
 
 ## Next Steps
 
-→ **Read next**: [Session & Correlation](06-session-and-correlation.md)
+→ **Read next**: [Session & Correlation](12-session-and-correlation.md)
 

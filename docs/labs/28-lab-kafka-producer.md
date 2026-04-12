@@ -159,7 +159,7 @@ Error: Timed out waiting for image pull
 
 ## Navigation
 
-**← Previous**: [Lab 5: CRUD Operations](05-lab-crud-operations.md)  
-**→ Next**: [Lab 7: Kafka with Feeders](07-lab-kafka-feeders.md)  
-**↑ Up**: [Lab Overview](00-lab-overview.md)
+**← Previous**: [Lab 5: CRUD Operations](27-lab-crud-operations.md)  
+**→ Next**: [Lab 7: Kafka with Feeders](29-lab-kafka-feeders.md)  
+**↑ Up**: [Lab Overview](22-lab-overview.md)
 

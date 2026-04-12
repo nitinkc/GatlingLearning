@@ -47,5 +47,5 @@
 
 ## Next Steps
 
-→ **FAQ**: [FAQ & Troubleshooting](04-faq.md)
+→ **FAQ**: [FAQ & Troubleshooting](24-faq.md)
 

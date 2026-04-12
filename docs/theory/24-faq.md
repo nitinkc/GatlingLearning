@@ -197,7 +197,7 @@ open target/gatling/*/index.html
 
 ## Next Steps
 
-→ Back to **Labs**: [Lab Overview](../03-labs/00-lab-overview.md)
+→ Back to **Labs**: [Lab Overview](../labs/22-lab-overview.md)
 
 → Or continue to **Advanced Topics**: Optimization, custom feeders, distributed testing
 

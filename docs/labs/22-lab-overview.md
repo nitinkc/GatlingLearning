@@ -500,5 +500,5 @@ Labs 1-5 + 8: ~3 hours
 
 ## Next Steps
 
-→ **Start Lab 1**: [Lab 1: Basic HTTP](01-lab-basic-http.md)
+→ **Start Lab 1**: [Lab 1: Basic HTTP](23-lab-basic-http.md)
 

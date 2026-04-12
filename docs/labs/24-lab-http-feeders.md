@@ -17,4 +17,4 @@ See full lab walkthrough by opening the simulation code in your IDE.
 ✅ Success rate >99%  
 ✅ Each request uses different data  
 ## Next Steps
-→ **Lab 3**: [Lab 3: Checks & Validation](03-lab-checks-validation.md)
+→ **Lab 3**: [Lab 3: Checks & Validation](25-lab-checks-validation.md)

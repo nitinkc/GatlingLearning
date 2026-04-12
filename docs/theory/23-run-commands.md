@@ -103,5 +103,5 @@ rm -rf ~/.m2/repository  # Full cache clear (slow)
 
 ## Next Steps
 
-→ **FAQ**: [FAQ & Troubleshooting](04-faq.md)
+→ **FAQ**: [FAQ & Troubleshooting](24-faq.md)
 

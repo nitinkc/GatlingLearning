@@ -271,7 +271,7 @@ Tags: "load-testing", "Lab1", "staging"
 
 ## Navigation
 
-**← Previous**: [Traces, Operations & Spans](02-traces-operations-spans.md)  
-**→ Next**: [Load Test Analysis](04-load-test-analysis.md)  
+**← Previous**: [Traces, Operations & Spans](14-traces-operations-spans.md)  
+**→ Next**: [Load Test Analysis](16-load-test-analysis.md)  
 **↑ Up**: [Documentation Index](../index.md)
 

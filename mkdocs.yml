@@ -59,17 +59,6 @@ nav:
     - 11. Checks & Assertions: theory/11-checks-and-assertions.md
     - 12. Session & Correlation: theory/12-session-and-correlation.md
 
-  - 🔬 Labs:
-    - Lab Overview: labs/22-lab-overview.md
-    - Lab 1 - Basic HTTP: labs/23-lab-basic-http.md
-    - Lab 2 - HTTP Feeders: labs/24-lab-http-feeders.md
-    - Lab 3 - Checks & Validation: labs/25-lab-checks-validation.md
-    - Lab 4 - Load Profiles: labs/26-lab-load-profiles.md
-    - Lab 5 - CRUD Operations: labs/27-lab-crud-operations.md
-    - Lab 6 - Kafka Producer: labs/28-lab-kafka-producer.md
-    - Lab 7 - Kafka Feeders: labs/29-lab-kafka-feeders.md
-    - Lab 8 - Advanced Patterns: labs/30-lab-advanced-patterns.md
-
   - 📊 Monitoring & Advanced:
     - 13. Datadog Integration: theory/13-datadog-integration.md
     - 14. Traces & Spans: theory/14-traces-operations-spans.md
@@ -83,6 +72,17 @@ nav:
     - 22. Glossary: theory/22-glossary.md
     - 23. Run Commands: theory/23-run-commands.md
     - 24. FAQ: theory/24-faq.md
+
+  - 🔬 Labs:
+      - Lab Overview: labs/22-lab-overview.md
+      - Lab 1 - Basic HTTP: labs/23-lab-basic-http.md
+      - Lab 2 - HTTP Feeders: labs/24-lab-http-feeders.md
+      - Lab 3 - Checks & Validation: labs/25-lab-checks-validation.md
+      - Lab 4 - Load Profiles: labs/26-lab-load-profiles.md
+      - Lab 5 - CRUD Operations: labs/27-lab-crud-operations.md
+      - Lab 6 - Kafka Producer: labs/28-lab-kafka-producer.md
+      - Lab 7 - Kafka Feeders: labs/29-lab-kafka-feeders.md
+      - Lab 8 - Advanced Patterns: labs/30-lab-advanced-patterns.md
 
   - 🔗 GitHub: https://github.com/nitinkc/GatlingLearning
 

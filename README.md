@@ -2,6 +2,8 @@
 
 A **self-contained, tutorial-style** project for systematically learning the [Gatling](https://gatling.io/) load testing framework — progressing from simple HTTP requests to parameterised Kafka producer simulations.
 
+[https://nitinkc.github.io/GatlingLearning/](https://nitinkc.github.io/GatlingLearning/)
+
 > **No cloud accounts, no secrets, no tokens required.**
 > HTTP simulations target the free public API [jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com).
 > Kafka simulations use an **embedded Kafka broker** started by [Testcontainers](https://testcontainers.com/) — just Docker.
@@ -10,10 +12,10 @@ A **self-contained, tutorial-style** project for systematically learning the [Ga
 
 ## Prerequisites
 
-| Tool | Version | Notes |
-|------|---------|-------|
-| Java | 21+ | `java -version` |
-| Maven | 3.9+ | `mvn -version` |
+| Tool   | Version    | Notes                                     |
+|:-------|:-----------|:------------------------------------------|
+| Java   | 21+        | `java -version`                           |
+| Maven  | 3.9+       | `mvn -version`                            |
 | Docker | any recent | Only needed for Kafka sims (Sim06, Sim07) |
 
 ---
